@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BEDO.DEV — Game Developer Portfolio</title>
+  <meta name="description" content="Abdelrhman Mostafa Hamed — Junior Game Developer specialising in Unity, C#, C++ and OpenGL. Cairo, Egypt.">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Icons — Font Awesome (no hardcoded images used anywhere) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div id="cursor"></div>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   NAV                               -->
+<!-- ╚═══════════════════════════════════╝ -->
+<nav>
+  <a href="#hero" class="nav-logo">BEDO.DEV</a>
+
+  <button class="nav-toggle" aria-label="Toggle navigation">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+
+  <div class="nav-status">
+    <span class="status-dot"></span>
+    AVAILABLE FOR HIRE
+  </div>
+</nav>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   HERO                              -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">// game developer · cairo, egypt</div>
+    <h1 class="hero-name">ABDELRHMAN<br><span>MOSTAFA</span></h1>
+    <div class="hero-title">Unity &nbsp;·&nbsp; C++ &nbsp;·&nbsp; OpenGL &nbsp;·&nbsp; WebGL</div>
+    <p class="hero-bio">
+      I build worlds from code — not engines that do the heavy lifting, but
+      low-level systems where every triangle earns its place.
+      Junior game developer with a passion for real-time graphics, physics simulation,
+      and immersive interactive experiences.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn btn-primary">
+        <i class="fa-solid fa-folder-open"></i> View Projects
+      </a>
+      <a href="mailto:bedomostafa37@gmail.com" class="btn btn-secondary">
+        <i class="fa-solid fa-paper-plane"></i> Get In Touch
+      </a>
+      <a href="https://github.com/Bedo-Mostafa" target="_blank" rel="noopener" class="btn btn-ghost">
+        <i class="fa-brands fa-github"></i> GitHub
+      </a>
+    </div>
+
+    <!-- Terminal -->
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+        <span class="term-dot"></span>
+        <span class="term-title">bedo@dev ~ zsh</span>
+      </div>
+      <div class="terminal-body" id="term-body"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   PROJECTS                          -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="projects">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">01 //</span>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <!-- Filter controls -->
+    <div class="proj-filters reveal">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="unity">Unity</button>
+      <button class="filter-btn" data-filter="graphics">OpenGL / Graphics</button>
+      <button class="filter-btn" data-filter="systems">Systems / Physics</button>
+      <button class="filter-btn" data-filter="webgl">WebGL</button>
+      <button class="filter-btn" data-filter="github">From GitHub</button>
+    </div>
+
+    <!-- Cards injected by projects.js -->
+    <div class="projects-grid" id="projects-grid"></div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   EXPERIENCE                        -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="experience" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">02 //</span>
+      <h2 class="section-title">Experience</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="exp-timeline">
+      <div class="exp-item reveal">
+        <div class="exp-header">
+          <div class="exp-role">Game Developer Instructor</div>
+          <span class="exp-date">Jul 2025 – Oct 2025</span>
+        </div>
+        <div class="exp-company">
+          <i class="fa-solid fa-wifi" style="margin-right:6px;font-size:0.75rem"></i>
+          3C Online Coding School — Remote
+        </div>
+        <p class="exp-desc">
+          Translated the dense language of game development into something a ten-year-old
+          could build with. Designed structured lesson progressions in Unity and C# that
+          met students where they were — and pushed them further than they expected.
+        </p>
+      </div>
+
+      <div class="exp-item reveal">
+        <div class="exp-header">
+          <div class="exp-role">Game Developer</div>
+          <span class="exp-date">Sep 2024 – Feb 2025</span>
+        </div>
+        <div class="exp-company">
+          <i class="fa-solid fa-globe" style="margin-right:6px;font-size:0.75rem"></i>
+          Whitton Publishing — Remote · Project-Based
+        </div>
+        <p class="exp-desc">
+          Shipped two browser-native educational games for kindergarten-age learners.
+          The challenge wasn't just technical — it was designing play that felt effortless
+          to a five-year-old while quietly building cognitive foundations underneath.
+          Delivered via Unity's WebGL pipeline with cross-browser compatibility.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   SKILLS                            -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="skills">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">03 //</span>
+      <h2 class="section-title">Skills</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skills-grid">
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-solid fa-dice-d20"></i> &nbsp;Game Dev</div>
+        <div class="skill-list">
+          <div class="skill-item">Unity Engine<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="90"></div></div></div></div>
+          <div class="skill-item">OpenGL (Modern)<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="75"></div></div></div></div>
+          <div class="skill-item">Box2D Physics<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill orange" data-pct="70"></div></div></div></div>
+          <div class="skill-item">NPC AI &amp; Behaviour<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill green" data-pct="65"></div></div></div></div>
+          <div class="skill-item">Gameplay Systems<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="85"></div></div></div></div>
+          <div class="skill-item">Level Design<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill green" data-pct="72"></div></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-solid fa-code"></i> &nbsp;Programming</div>
+        <div class="skill-list">
+          <div class="skill-item">C# (primary)<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="92"></div></div></div></div>
+          <div class="skill-item">C / C++<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill orange" data-pct="78"></div></div></div></div>
+          <div class="skill-item">Java<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill green" data-pct="60"></div></div></div></div>
+          <div class="skill-item">Python (basics)<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill green" data-pct="50"></div></div></div></div>
+          <div class="skill-item">F# / Oz (functional)<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill" data-pct="45"></div></div></div></div>
+          <div class="skill-item">GLSL Shaders<div class="skill-bar-wrap"><div class="skill-bar-track"><div class="skill-bar-fill orange" data-pct="68"></div></div></div></div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-solid fa-display"></i> &nbsp;Rendering / Graphics</div>
+        <div class="skill-list">
+          <div class="skill-item">VAOs / VBOs / EBOs</div>
+          <div class="skill-item">Phong Lighting Model</div>
+          <div class="skill-item">Shader Programming</div>
+          <div class="skill-item">MVP Matrices</div>
+          <div class="skill-item">First-Person Camera</div>
+          <div class="skill-item">WebGL</div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-solid fa-database"></i> &nbsp;Backend / Data</div>
+        <div class="skill-list">
+          <div class="skill-item">ASP.NET / .NET Core</div>
+          <div class="skill-item">Entity Framework Core</div>
+          <div class="skill-item">LINQ</div>
+          <div class="skill-item">MS SQL Server</div>
+          <div class="skill-item">PL/SQL / MySQL</div>
+          <div class="skill-item">Data Structures &amp; Algorithms</div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-brands fa-git-alt"></i> &nbsp;Tools &amp; Workflow</div>
+        <div class="skill-list">
+          <div class="skill-item">Git / GitHub</div>
+          <div class="skill-item">Agile / Scrum</div>
+          <div class="skill-item">Performance Optimisation</div>
+          <div class="skill-item">Asset Integration</div>
+        </div>
+      </div>
+
+      <div class="skill-group reveal">
+        <div class="skill-group-title"><i class="fa-solid fa-users"></i> &nbsp;Soft Skills</div>
+        <div class="skill-list">
+          <div class="skill-item">Communication</div>
+          <div class="skill-item">Teamwork</div>
+          <div class="skill-item">Problem-Solving</div>
+          <div class="skill-item">Time Management</div>
+          <div class="skill-item">Arabic (native)</div>
+          <div class="skill-item">English (professional)</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   AWARDS                            -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="awards" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">04 //</span>
+      <h2 class="section-title">Awards</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="awards-list">
+      <div class="award-item reveal">
+        <div class="award-place">2<sup style="font-size:1.1rem">nd</sup></div>
+        <div class="award-info">
+          <div class="award-title">Egypt Game Jam</div>
+          <div class="award-org">
+            <i class="fa-solid fa-trophy"></i>
+            &nbsp;Information Technology Institute (ITI) &nbsp;·&nbsp; February 2026
+          </div>
+          <p class="award-desc">
+            Shipped a fully playable domino game under jam pressure — rule enforcement,
+            placement logic, turn sequencing, and stable scene transitions. The kind of
+            game jam where nothing breaks in the demo. Ours didn't.
+          </p>
+        </div>
+      </div>
+
+      <div class="award-item reveal">
+        <div class="award-place">3<sup style="font-size:1.1rem">rd</sup></div>
+        <div class="award-info">
+          <div class="award-title">Mini Game Jam</div>
+          <div class="award-org">
+            <i class="fa-solid fa-stopwatch"></i>
+            &nbsp;Information Technology Institute (ITI) &nbsp;·&nbsp; November 2025
+          </div>
+          <p class="award-desc">
+            Designed for speed: a core gameplay loop assembled from scratch under the clock.
+            Modular architecture meant rapid iteration and a clean, playable prototype
+            delivered inside the event window — not after it.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   EDUCATION                         -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="education">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">05 //</span>
+      <h2 class="section-title">Education</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="edu-grid">
+      <div class="edu-card reveal">
+        <div class="edu-degree">
+          <i class="fa-solid fa-graduation-cap" style="color:var(--accent);margin-right:8px;font-size:0.9rem"></i>
+          9-Month Diploma
+        </div>
+        <div class="edu-school">Information Technology Institute (ITI)</div>
+        <div class="edu-date"><i class="fa-solid fa-calendar-days" style="margin-right:5px;font-size:0.7rem"></i>Oct 2025 – Present &nbsp;·&nbsp; Smart Village, Egypt</div>
+        <div class="edu-detail">Interactive Media &amp; Game Development Academy</div>
+      </div>
+
+      <div class="edu-card reveal">
+        <div class="edu-degree">
+          <i class="fa-solid fa-university" style="color:var(--accent);margin-right:8px;font-size:0.9rem"></i>
+          BSc Computer Science
+        </div>
+        <div class="edu-school">Helwan University</div>
+        <div class="edu-date"><i class="fa-solid fa-calendar-days" style="margin-right:5px;font-size:0.7rem"></i>2021 – 2025 &nbsp;·&nbsp; Cairo, Egypt</div>
+        <div class="edu-detail">GPA 3.23 &mdash; Grade: Very Good</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   CONTACT                           -->
+<!-- ╚═══════════════════════════════════╝ -->
+<section id="contact" style="background:var(--bg2)">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="section-num">06 //</span>
+      <h2 class="section-title">Contact</h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="contact-blurb">
+          Open to junior game developer roles, freelance projects, and creative collaborations.
+          Whether it's real-time graphics, gameplay systems, or educational game design —
+          let's build something worth playing.
+        </p>
+        <div class="contact-links">
+          <a href="mailto:bedomostafa37@gmail.com" class="contact-link">
+            <i class="fa-solid fa-envelope"></i>
+            bedomostafa37@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/abdelrahman-moostafa" target="_blank" rel="noopener" class="contact-link">
+            <i class="fa-brands fa-linkedin"></i>
+            abdelrahman-moostafa
+          </a>
+          <a href="https://github.com/Bedo-Mostafa" target="_blank" rel="noopener" class="contact-link">
+            <i class="fa-brands fa-github"></i>
+            Bedo-Mostafa
+          </a>
+          <a href="https://abdelrhman-mostafa.itch.io" target="_blank" rel="noopener" class="contact-link">
+            <i class="fa-brands fa-itch-io"></i>
+            abdelrhman-mostafa (itch.io)
+          </a>
+          <a href="tel:+201554357046" class="contact-link">
+            <i class="fa-solid fa-phone"></i>
+            (+20) 155 435 7046
+          </a>
+        </div>
+      </div>
+
+      <div class="contact-info reveal">
+        <div class="info-row">
+          <span class="info-label"><i class="fa-solid fa-location-dot"></i> &nbsp;Location</span>
+          <span class="info-val">Maadi, Cairo, Egypt</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fa-solid fa-circle-check"></i> &nbsp;Status</span>
+          <span class="info-val green">Available</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fa-solid fa-gamepad"></i> &nbsp;Engine</span>
+          <span class="info-val cyan">Unity</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fa-solid fa-hashtag"></i> &nbsp;Language</span>
+          <span class="info-val cyan">C# / C++</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fa-solid fa-trophy"></i> &nbsp;Jams Won</span>
+          <span class="info-val green">2 Placements</span>
+        </div>
+        <div class="info-row">
+          <span class="info-label"><i class="fa-brands fa-github"></i> &nbsp;GitHub</span>
+          <span class="info-val cyan">Bedo-Mostafa</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   FOOTER                            -->
+<!-- ╚═══════════════════════════════════╝ -->
+<footer>
+  <div class="footer-logo">BEDO.DEV</div>
+  <div class="footer-text">Abdelrhman Mostafa Hamed &mdash; Game Developer &mdash; Cairo, Egypt</div>
+  <div class="footer-text" id="footer-year"></div>
+</footer>
+
+<!-- ╔═══════════════════════════════════╗ -->
+<!--   EASTER EGG MINI GAME              -->
+<!-- ╚═══════════════════════════════════╝ -->
+<button class="game-trigger" title="Play a mini game!">
+  <i class="fa-solid fa-gamepad"></i> &nbsp;PLAY GAME
+</button>
+
+<div id="mini-game-overlay">
+  <div class="game-ui" style="font-size:1rem;color:var(--accent);letter-spacing:0.15em;font-family:var(--font-head)">
+    BYTE DODGER
+  </div>
+  <div class="game-ui">Arrow/WASD to move &nbsp;·&nbsp; Space/Z to shoot &nbsp;·&nbsp; R to restart</div>
+  <canvas id="mini-game-canvas"></canvas>
+  <button class="game-close">
+    <i class="fa-solid fa-xmark"></i> &nbsp;CLOSE
+  </button>
+</div>
+
+<!-- ── Scripts (order matters) ── -->
+<script src="js/projects.js"></script>
+<script src="js/minigame.js"></script>
+<script src="js/main.js"></script>
+
+</body>
+</html>
