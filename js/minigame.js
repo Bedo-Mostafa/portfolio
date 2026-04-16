@@ -3,21 +3,24 @@
    WASD / Arrows to move · Space / Z to shoot · R to restart
    ============================================================ */
 
-(function() {
+(function () {
   var COLORS = {
-    accent:  '#00e5ff',
+    accent: '#00e5ff',
     accent2: '#ff6b35',
     accent3: '#a8ff3e',
-    dim:     '#1a2a35',
-    bg:      '#0a1219',
+    dim: '#1a2a35',
+    bg: '#0a1219',
   };
 
   /* Score milestones that trigger a project popup in the game */
-  var SCORE_MILESTONES = [
-    { score: 30,  projectId: '2d-side-scroller',  label: '2D Side-Scrolling Adventure' },
-    { score: 50,  projectId: 'domino-jam',         label: 'Domino — Egypt Game Jam 2nd Place' },
-    { score: 100, projectId: 'kg-webgl',           label: 'Educational WebGL Games' },
-  ];
+  var SCORE_MILESTONES = STATIC_PROJECTS
+    .filter(p => p.scoreUnlock > 0)
+    .map(p => ({
+      score: p.scoreUnlock,
+      projectId: p.id,
+      label: p.title
+    }))
+    .sort((a, b) => a.score - b.score);
 
   var canvas, ctx, gameLoop, state, explosions;
   var keydownHandler, keyupHandler;
@@ -29,7 +32,7 @@
     ctx = canvas.getContext('2d');
 
     var size = Math.min(window.innerWidth - 40, 520);
-    canvas.width  = size;
+    canvas.width = size;
     canvas.height = Math.round(size * 0.65);
 
     explosions = [];
@@ -51,24 +54,24 @@
         invincible: 0,
         trail: [],
       },
-      bullets:  [],
-      enemies:  [],
-      stars: (function(){
+      bullets: [],
+      enemies: [],
+      stars: (function () {
         var arr = [];
-        for(var i=0;i<55;i++) arr.push({
-          x: Math.random()*canvas.width,
-          y: Math.random()*canvas.height,
-          r: Math.random()*1.5+0.3,
-          spd: Math.random()*0.8+0.2,
+        for (var i = 0; i < 55; i++) arr.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          r: Math.random() * 1.5 + 0.3,
+          spd: Math.random() * 0.8 + 0.2,
         });
         return arr;
       })(),
-      score:      0,
-      lives:      3,
-      frame:      0,
-      over:       false,
-      started:    false,
-      keys:       {},
+      score: 0,
+      lives: 3,
+      frame: 0,
+      over: false,
+      started: false,
+      keys: {},
       milestonesSeen: new Set(),
       popup: null,   /* { label, timer } */
     };
@@ -77,9 +80,9 @@
   /* ── BIND CONTROLS (called once per init; remove old listeners first) ── */
   function bindControls() {
     if (keydownHandler) document.removeEventListener('keydown', keydownHandler);
-    if (keyupHandler)   document.removeEventListener('keyup',   keyupHandler);
+    if (keyupHandler) document.removeEventListener('keyup', keyupHandler);
 
-    keydownHandler = function(e) {
+    keydownHandler = function (e) {
       if (!state) return;
       state.keys[e.key] = true;
       if (!state.started && !state.over) state.started = true;
@@ -92,15 +95,15 @@
         e.preventDefault(); /* stop page scroll */
       }
     };
-    keyupHandler = function(e) {
+    keyupHandler = function (e) {
       if (state) state.keys[e.key] = false;
     };
 
     document.addEventListener('keydown', keydownHandler);
-    document.addEventListener('keyup',   keyupHandler);
+    document.addEventListener('keyup', keyupHandler);
 
     /* Touch */
-    canvas.addEventListener('touchmove', function(e) {
+    canvas.addEventListener('touchmove', function (e) {
       e.preventDefault();
       if (!state) return;
       var touch = e.touches[0];
@@ -110,7 +113,7 @@
       if (!state.started) state.started = true;
     }, { passive: false });
 
-    canvas.addEventListener('touchstart', function(e) {
+    canvas.addEventListener('touchstart', function (e) {
       if (!state) return;
       if (!state.started) { state.started = true; return; }
       if (state.over) { doRestart(); return; }
@@ -134,17 +137,17 @@
   function spawnEnemy() {
     var diff = state.score;
     var types = [
-      { w:12, h:12, icon:'◆', color: COLORS.accent2, pts:10, spd: 1.5 + diff/900 },
-      { w:16, h:12, icon:'▶', color: '#c678ff',      pts:20, spd: 2.2 + diff/700 },
-      { w: 8, h: 8, icon:'●', color: COLORS.accent,  pts:5,  spd: 3.2 + diff/600 },
+      { w: 12, h: 12, icon: '◆', color: COLORS.accent2, pts: 10, spd: 1.5 + diff / 900 },
+      { w: 16, h: 12, icon: '▶', color: '#c678ff', pts: 20, spd: 2.2 + diff / 700 },
+      { w: 8, h: 8, icon: '●', color: COLORS.accent, pts: 5, spd: 3.2 + diff / 600 },
     ];
     var t = types[Math.floor(Math.random() * types.length)];
-    state.enemies.push({ x: Math.random()*(canvas.width-20)+10, y:-16, angle:0, ...t });
+    state.enemies.push({ x: Math.random() * (canvas.width - 20) + 10, y: -16, angle: 0, ...t });
   }
 
   /* ── CHECK MILESTONES ── */
   function checkMilestones(score) {
-    SCORE_MILESTONES.forEach(function(m) {
+    SCORE_MILESTONES.forEach(function (m) {
       if (score >= m.score && !state.milestonesSeen.has(m.score)) {
         state.milestonesSeen.add(m.score);
         /* Unlock in the projects section */
@@ -158,23 +161,23 @@
   /* ── TICK ── */
   function tick() {
     if (!state || !canvas) return;
-    var player   = state.player;
-    var bullets  = state.bullets;
-    var enemies  = state.enemies;
-    var stars    = state.stars;
-    var keys     = state.keys;
+    var player = state.player;
+    var bullets = state.bullets;
+    var enemies = state.enemies;
+    var stars = state.stars;
+    var keys = state.keys;
 
     state.frame++;
 
     if (!state.over && state.started) {
       /* Movement */
       player.dx = 0; player.dy = 0;
-      if (keys['ArrowLeft']  || keys['a'] || keys['A']) player.dx = -player.speed;
-      if (keys['ArrowRight'] || keys['d'] || keys['D']) player.dx =  player.speed;
-      if (keys['ArrowUp']    || keys['w'] || keys['W']) player.dy = -player.speed;
-      if (keys['ArrowDown']  || keys['s'] || keys['S']) player.dy =  player.speed;
+      if (keys['ArrowLeft'] || keys['a'] || keys['A']) player.dx = -player.speed;
+      if (keys['ArrowRight'] || keys['d'] || keys['D']) player.dx = player.speed;
+      if (keys['ArrowUp'] || keys['w'] || keys['W']) player.dy = -player.speed;
+      if (keys['ArrowDown'] || keys['s'] || keys['S']) player.dy = player.speed;
 
-      player.x = Math.max(player.w, Math.min(canvas.width  - player.w, player.x + player.dx));
+      player.x = Math.max(player.w, Math.min(canvas.width - player.w, player.x + player.dx));
       player.y = Math.max(player.h, Math.min(canvas.height - player.h, player.y + player.dy));
 
       /* Trail */
@@ -187,12 +190,12 @@
 
       /* Move bullets */
       for (var bi = bullets.length - 1; bi >= 0; bi--) bullets[bi].y -= bullets[bi].spd;
-      state.bullets = bullets.filter(function(b){ return b.y > -10; });
+      state.bullets = bullets.filter(function (b) { return b.y > -10; });
 
       /* Move enemies */
       var newEnemies = [];
       for (var ei = 0; ei < enemies.length; ei++) {
-        enemies[ei].y     += enemies[ei].spd;
+        enemies[ei].y += enemies[ei].spd;
         enemies[ei].angle += 0.05;
         if (enemies[ei].y < canvas.height + 20) newEnemies.push(enemies[ei]);
       }
@@ -207,7 +210,7 @@
           if (Math.abs(b.x - e.x) < e.w && Math.abs(b.y - e.y) < e.h) {
             bArr.splice(bi2, 1);
             var pts = e.pts;
-            var ex  = e.x, ey = e.y, ec = e.color;
+            var ex = e.x, ey = e.y, ec = e.color;
             eArr.splice(ei2, 1);
             var prevScore = state.score;
             state.score += pts;
@@ -259,9 +262,9 @@
   function spawnExplosion(x, y, color) {
     var particles = [];
     for (var i = 0; i < 9; i++) {
-      particles.push({ angle: (i/9)*Math.PI*2, spd: Math.random()*3+1, life: 1 });
+      particles.push({ angle: (i / 9) * Math.PI * 2, spd: Math.random() * 3 + 1, life: 1 });
     }
-    explosions.push({ x:x, y:y, color:color, particles:particles });
+    explosions.push({ x: x, y: y, color: color, particles: particles });
   }
 
   /* ── DRAW ── */
@@ -271,23 +274,23 @@
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     /* Stars */
-    state.stars.forEach(function(s) {
+    state.stars.forEach(function (s) {
       ctx.fillStyle = 'rgba(0,229,255,' + (s.r * 0.28) + ')';
-      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2); ctx.fill();
     });
 
     if (!state.started) {
-      drawCentered('BYTE DODGER', canvas.height/2 - 30, COLORS.accent, 18);
-      drawCentered('Arrow / WASD to move   Space / Z to shoot', canvas.height/2, COLORS.dim, 11);
-      drawCentered('Touch: drag to move, tap to shoot', canvas.height/2 + 20, COLORS.dim, 10);
-      drawCentered('Reach score milestones to UNLOCK PROJECTS', canvas.height/2 + 42, COLORS.accent3, 10);
-      drawCentered('Press any key to start', canvas.height/2 + 65, COLORS.accent2, 11);
+      drawCentered('BYTE DODGER', canvas.height / 2 - 30, COLORS.accent, 18);
+      drawCentered('Arrow / WASD to move   Space / Z to shoot', canvas.height / 2, COLORS.dim, 11);
+      drawCentered('Touch: drag to move, tap to shoot', canvas.height / 2 + 20, COLORS.dim, 10);
+      drawCentered('Reach score milestones to UNLOCK PROJECTS', canvas.height / 2 + 42, COLORS.accent3, 10);
+      drawCentered('Press any key to start', canvas.height / 2 + 65, COLORS.accent2, 11);
       drawHUD();
       return;
     }
 
     /* Player trail */
-    state.player.trail.forEach(function(pt, i) {
+    state.player.trail.forEach(function (pt, i) {
       var alpha = (i / state.player.trail.length) * 0.38;
       ctx.fillStyle = 'rgba(0,229,255,' + alpha + ')';
       ctx.fillRect(pt.x - 3, pt.y - 3, 6, 6);
@@ -312,7 +315,7 @@
     }
 
     /* Bullets */
-    state.bullets.forEach(function(b) {
+    state.bullets.forEach(function (b) {
       ctx.fillStyle = COLORS.accent3;
       ctx.shadowColor = COLORS.accent3; ctx.shadowBlur = 8;
       ctx.fillRect(b.x - 2, b.y - 7, 4, 14);
@@ -320,7 +323,7 @@
     ctx.shadowBlur = 0;
 
     /* Enemies */
-    state.enemies.forEach(function(e) {
+    state.enemies.forEach(function (e) {
       ctx.save();
       ctx.translate(e.x, e.y);
       ctx.rotate(e.angle);
@@ -337,7 +340,7 @@
     for (var xi = explosions.length - 1; xi >= 0; xi--) {
       var ex = explosions[xi];
       var alive = false;
-      ex.particles.forEach(function(p) {
+      ex.particles.forEach(function (p) {
         if (p.life <= 0) return;
         p.life -= 0.048;
         alive = true;
@@ -372,10 +375,10 @@
       ctx.font = 'bold 10px Share Tech Mono, monospace';
       ctx.fillStyle = COLORS.accent3;
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('PROJECT UNLOCKED', canvas.width/2, pY + 10);
+      ctx.fillText('PROJECT UNLOCKED', canvas.width / 2, pY + 10);
       ctx.font = '11px Share Tech Mono, monospace';
       ctx.fillStyle = '#ffffff';
-      ctx.fillText(state.popup.label, canvas.width/2, pY + 30);
+      ctx.fillText(state.popup.label, canvas.width / 2, pY + 30);
       ctx.globalAlpha = 1;
     }
 
@@ -383,14 +386,14 @@
     if (state.over) {
       ctx.fillStyle = 'rgba(4,8,13,0.8)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      drawCentered('GAME OVER', canvas.height/2 - 28, COLORS.accent2, 24);
-      drawCentered('SCORE: ' + state.score, canvas.height/2 + 6, COLORS.accent, 16);
-      drawCentered('Press R to restart  |  Tap to restart', canvas.height/2 + 36, COLORS.dim, 11);
+      drawCentered('GAME OVER', canvas.height / 2 - 28, COLORS.accent2, 24);
+      drawCentered('SCORE: ' + state.score, canvas.height / 2 + 6, COLORS.accent, 16);
+      drawCentered('Press R to restart  |  Tap to restart', canvas.height / 2 + 36, COLORS.dim, 11);
       /* Show unlocked projects hint */
       var unlocked = [];
-      SCORE_MILESTONES.forEach(function(m){ if(state.score >= m.score) unlocked.push(m.label); });
+      SCORE_MILESTONES.forEach(function (m) { if (state.score >= m.score) unlocked.push(m.label); });
       if (unlocked.length > 0) {
-        drawCentered('Unlocked: ' + unlocked.length + ' project(s) in portfolio', canvas.height/2 + 60, COLORS.accent3, 10);
+        drawCentered('Unlocked: ' + unlocked.length + ' project(s) in portfolio', canvas.height / 2 + 60, COLORS.accent3, 10);
       }
     }
   }
@@ -404,16 +407,16 @@
     ctx.fillStyle = COLORS.accent2;
     ctx.textAlign = 'right';
     var hearts = '';
-    for(var i=0;i<state.lives;i++) hearts += '♥ ';
+    for (var i = 0; i < state.lives; i++) hearts += '♥ ';
     ctx.fillText(hearts.trim(), canvas.width - 10, 10);
     /* next milestone hint */
     var next = null;
-    SCORE_MILESTONES.forEach(function(m){ if (!next && state.score < m.score) next = m; });
+    SCORE_MILESTONES.forEach(function (m) { if (!next && state.score < m.score) next = m; });
     if (next && state.started && !state.over) {
       ctx.font = '9px Share Tech Mono, monospace';
       ctx.fillStyle = COLORS.accent3;
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('Next unlock at ' + next.score + ' pts', canvas.width/2, 10);
+      ctx.fillText('Next unlock at ' + next.score + ' pts', canvas.width / 2, 10);
     }
   }
 
@@ -421,7 +424,7 @@
     ctx.font = size + 'px Share Tech Mono, monospace';
     ctx.fillStyle = color;
     ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-    ctx.fillText(text, canvas.width/2, y);
+    ctx.fillText(text, canvas.width / 2, y);
   }
 
   function roundRect(ctx, x, y, w, h, r) {
@@ -443,9 +446,9 @@
     clearInterval(gameLoop);
     gameLoop = null;
     if (keydownHandler) document.removeEventListener('keydown', keydownHandler);
-    if (keyupHandler)   document.removeEventListener('keyup',   keyupHandler);
+    if (keyupHandler) document.removeEventListener('keyup', keyupHandler);
     keydownHandler = null;
-    keyupHandler   = null;
+    keyupHandler = null;
     state = null;
     explosions = [];
   }

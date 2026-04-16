@@ -50,15 +50,12 @@ The goal was to understand what engines hide from you: MVP matrix transformation
     ],
     icon: 'fa-solid fa-cube',
     category: 'graphics',
-    github: 'https://github.com/Bedo-Mostafa',
-    demo: null,
+    github: 'https://github.com/Bedo-Mostafa/3D-Maze-OpenGL',
+    demo: 'https://abdelrhman-mostafa.itch.io/3d-maze-explorer',//'https://youtu.be/z4MjLof0k9c',
     featured: true,
     scoreUnlock: 0,
     media: [
-      /* Add your screenshots / videos:
-         { type: 'image', src: 'https://...', caption: 'Maze corridor with Phong lighting' }
-         { type: 'youtube', id: 'YOUR_VIDEO_ID', caption: 'Gameplay walkthrough' }
-      */
+      { type: 'youtube', id: 'z4MjLof0k9c', caption: 'Gameplay walkthrough' }
     ],
   },
   {
@@ -83,7 +80,10 @@ Built to feel what engines hide from you: how a fixed timestep accumulator preve
     demo: null,
     featured: true,
     scoreUnlock: 0,
-    media: [],
+    media: [
+      // https://youtu.be/L-FQmg9gyos
+      { type: 'youtube', id: 'L-FQmg9gyos', caption: 'Gameplay walkthrough' }
+    ],
   },
   {
     id: 'tick-tock',
@@ -104,36 +104,42 @@ Key systems: Unity's character controller extended with custom physics responses
     ],
     icon: 'fa-solid fa-gem',
     category: 'unity',
-    github: 'https://github.com/Bedo-Mostafa',
-    demo: null,
+    github: 'https://github.com/Hazem-Ahmed1/3D-Game-Grahpics',
+    demo: 'https://hazem-ahmed-a.itch.io/tick-tock-treasure',
     featured: true,
     scoreUnlock: 0,
-    media: [],
+    media: [
+      { type: 'youtube', id: 'QsxG-32OnnU', caption: 'Gameplay walkthrough' }
+    ],
   },
   {
-    id: '2d-side-scroller',
-    title: '2D Side-Scrolling Adventure',
-    shortDesc: 'Physics-driven platformer with layered hazards and contextual collision zones.',
-    fullDesc: `Layers of hazards, physics-driven momentum, and level geometry that communicates before the player even lands.
+    id: 'yallahwy',
+    title: 'Yallahwy — ITI Game Jam',
+    shortDesc: 'Arcade chaos built in 3 days — C++ with SFML and Box2D under jam constraints.',
+    fullDesc: `Built in 72 hours for an ITI game jam — speed over comfort, correctness under pressure.
 
-Collision zones are contextual, not blunt — the jump arc does the teaching. Each obstacle is spaced to let the player feel momentum before punishing them for losing it. The camera system uses a look-ahead offset so fast movement never feels blind.
+Core loop is immediate: responsive controls, tight collision handling, and fast restart cycles. SFML handles rendering and input while Box2D drives rigid body interactions and collision resolution.
 
-Key features: custom 2D character controller, parallax background layers, animated sprite state machine, hazard zones with screen-shake feedback, and a checkpoint system that saves progress without breaking flow.`,
-    tags: ['Unity', 'C#', '2D', 'Platformer'],
-    tagColors: ['cyan', 'green', 'orange', 'cyan'],
+The constraint shaped the architecture: minimal abstractions, direct system wiring, and a focus on stability over feature breadth. The result is a compact, deterministic gameplay loop that holds under rapid iteration and demo conditions.`,
+    tags: ['C++', 'SFML', 'Box2D', 'Game Jam'],
+    tagColors: ['orange', 'cyan', 'cyan', 'purple'],
     tools: [
-      { name: 'Unity', icon: 'fa-solid fa-gamepad', color: 'cyan' },
-      { name: 'C#', icon: 'fa-solid fa-hashtag', color: 'green' },
-      { name: 'Unity 2D Physics', icon: 'fa-solid fa-atom', color: 'orange' },
-      { name: 'Unity Animator', icon: 'fa-solid fa-film', color: 'purple' },
+      { name: 'C++', icon: 'fa-solid fa-code', color: 'orange' },
+      { name: 'SFML', icon: 'fa-solid fa-display', color: 'cyan' },
+      { name: 'Box2D', icon: 'fa-solid fa-atom', color: 'green' },
     ],
-    icon: 'fa-solid fa-gamepad',
-    category: 'unity',
-    github: 'https://github.com/Bedo-Mostafa',
-    demo: null,
-    featured: false,
-    scoreUnlock: 30,
-    media: [],
+    icon: 'fa-solid fa-fire',
+    category: 'systems',
+    github: null,
+    demo: 'https://abdelrhman-mostafa.itch.io/yallahwy',
+    featured: true,
+    scoreUnlock: 50,
+    media: [
+      { type: 'image', src: 'assets/yallahwy/1.png', caption: 'Core gameplay – fast loop and immediate restart' },
+      { type: 'image', src: 'assets/yallahwy/2.png', caption: 'Physics interaction – Box2D collision handling' },
+      { type: 'image', src: 'assets/yallahwy/3.png', caption: 'Arcade chaos – dense objects and reactions' },
+      { type: 'image', src: 'assets/yallahwy/4.png', caption: 'Arcade chaos – dense objects and reactions' }
+    ]
   },
   {
     id: 'domino-jam',
@@ -141,7 +147,7 @@ Key features: custom 2D character controller, parallax background layers, animat
     shortDesc: 'Fully rule-enforced domino game shipped under jam pressure. Didn\'t crash at the demo table.',
     fullDesc: `Shipped under jam pressure with full rule enforcement: placement validity, turn sequencing, score tracking, and stable scene transitions.
 
-Built in 48 hours for the Egypt Game Jam hosted by ITI. The challenge wasn't just making a playable game — it was making a correct domino game. Every placement is validated against adjacency and pip-matching rules. The AI opponent uses a weighted decision tree to pick the best valid tile.
+Built in 6 days for the Egypt Game Jam hosted by ITI. The challenge wasn't just making a playable game — it was making a correct domino game. Every placement is validated against adjacency and pip-matching rules. The AI opponent uses a weighted decision tree to pick the best valid tile.
 
 The kind of submission that doesn't crash on the demo table. This one didn't. Won 2nd place out of all competing teams.`,
     tags: ['Unity', 'C#', 'Game Jam', 'Board Game'],
@@ -154,11 +160,14 @@ The kind of submission that doesn't crash on the demo table. This one didn't. Wo
     ],
     icon: 'fa-solid fa-trophy',
     category: 'unity',
-    github: 'https://github.com/Bedo-Mostafa',
-    demo: null,
+    github: 'https://github.com/Bedo-Mostafa/EGJ',
+    demo: 'https://abdelrhman-mostafa.itch.io/a3dt-domino',
     featured: true,
-    scoreUnlock: 50,
-    media: [],
+    scoreUnlock: 100,
+    media: [
+      //https://youtu.be/nK0kg0FuQmE?si=3Xk2BtFag8AdWoRh
+      { type: 'youtube', id: 'nK0kg0FuQmE', caption: 'Gameplay walkthrough' }
+    ],
   },
   {
     id: 'kg-webgl',
@@ -179,13 +188,27 @@ Commissioned by Whitton Publishing. Ships in a browser tab with no install, no l
     ],
     icon: 'fa-solid fa-children',
     category: 'webgl',
-    github: 'https://github.com/Bedo-Mostafa',
     demo: null,
     featured: false,
-    scoreUnlock: 100,
-    media: [],
+    scoreUnlock: 150,
+    media: [
+      { type: 'image', src: 'assets/KG1&2/1.png', caption: 'Main menu – phonics learning entry screen' },
+      { type: 'image', src: 'assets/KG1&2/2.png', caption: 'Interactive stage – character responding to player input' },
+      { type: 'image', src: 'assets/KG1&2/3.png', caption: 'UI feedback – animated curtain transition' },
+      { type: 'image', src: 'assets/KG1&2/4.png', caption: 'Game scene – learning environment setup' },
+      { type: 'image', src: 'assets/KG1&2/5.png', caption: 'Object interaction – selecting and matching elements' },
+      { type: 'image', src: 'assets/KG1&2/6.png', caption: 'Phonics exercise – letter recognition activity' },
+      { type: 'image', src: 'assets/KG1&2/7.png', caption: 'Progression system – advancing through levels' },
+      { type: 'image', src: 'assets/KG1&2/8.png', caption: 'Visual feedback – correct/incorrect response cues' },
+      { type: 'image', src: 'assets/KG1&2/9.png', caption: 'World map – selecting different learning modules' },
+      { type: 'image', src: 'assets/KG1&2/10.png', caption: 'Choice interaction – selecting correct answer paths' },
+      { type: 'image', src: 'assets/KG1&2/11.png', caption: 'Writing practice – tracing letters activity' },
+      { type: 'image', src: 'assets/KG1&2/12.png', caption: 'Assessment screen – evaluating player input' },
+      { type: 'image', src: 'assets/KG1&2/13.png', caption: 'Main menu – themed environment variation' },
+      { type: 'image', src: 'assets/KG1&2/14.png', caption: 'Mini-game – movement and interaction sequence' },
+      { type: 'image', src: 'assets/KG1&2/15.png', caption: 'Final gameplay – question and answer challenge' }
+    ]
   },
-
   /* ══════════════════════════════════════════════════════
      ↓  ADD YOUR NEW PROJECTS BELOW THIS LINE  ↓
      ══════════════════════════════════════════════════════ */
@@ -594,13 +617,7 @@ function initProjects() {
     bindCardEvents(card, proj);
   });
 
-  var loaderCard = document.createElement('div');
-  loaderCard.className = 'gh-loading proj-card';
-  loaderCard.innerHTML = '<i class="fa-brands fa-github"></i>&nbsp; fetching repos…';
-  container.appendChild(loaderCard);
-
   var track = buildCarousel(container);
-  fetchGitHubReposCarousel(track);
 
   document.querySelectorAll('.filter-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
