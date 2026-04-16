@@ -614,14 +614,21 @@ section {
   order: 1;
 }
 
+
 .proj-carousel-track {
   display: flex;
   gap: 1.4rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   -webkit-overflow-scrolling: touch;
-  padding: 0.5rem 0.2rem 1.2rem;
+  padding: 1rem 0.5rem 1.5rem 0.5rem;
   scrollbar-width: none;
+}
+
+.proj-carousel-track::after {
+  content: '';
+  flex: 0 0 1px;
+  padding-right: 0.5rem;
 }
 
 .proj-carousel-track::-webkit-scrollbar {
