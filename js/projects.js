@@ -1,44 +1,53 @@
 /* ============================================================
-   projects.js — Project data, media showcase, GitHub fetch
+   projects.js — Project data, carousel, detail modal
    ============================================================
 
    HOW TO ADD A NEW PROJECT
    ─────────────────────────
-   1. Find the STATIC_PROJECTS array below (starts ~line 20).
-   2. Copy any existing project object and paste it as a new
-      entry inside the array (add a comma after the previous
-      closing brace  }  before your new one).
-   3. Fill in these fields:
+   1. Find the STATIC_PROJECTS array below.
+   2. Copy any existing object and fill in these fields:
         id          – unique slug, e.g. 'my-new-game'
         title       – display name
-        desc        – fresh description (don't copy the CV!)
+        shortDesc   – one-line summary shown on the card
+        fullDesc    – long description for the modal (blank lines = paragraphs)
         tags        – array of tech labels
-        tagColors   – parallel array: 'cyan'|'orange'|'green'|'purple'
-        icon        – Font Awesome class e.g. 'fa-solid fa-gamepad'
+        tagColors   – 'cyan'|'orange'|'green'|'purple' (one per tag)
+        tools       – array of { name, icon (FA class), color }
+        icon        – Font Awesome class for the card icon
         category    – 'unity'|'graphics'|'systems'|'webgl'|'github'
-        github      – full URL string, or null
-        demo        – live demo URL string, or null
+        github      – URL or null
+        demo        – URL or null
         featured    – true | false
-        scoreUnlock – score needed in mini-game to reveal this card
-                      (0 = always visible, 50 = unlocked at 50 pts)
-        media       – array of media objects:
-                      { type:'image',   src:'URL', caption:'text' }
-                      { type:'youtube', id:'VIDEO_ID', caption:'text' }
-   4. Save the file. Done!
+        scoreUnlock – 0 = always visible, N = unlocked at N pts in mini-game
+        media       – array of:
+                        { type:'image',   src:'URL', caption:'text' }
+                        { type:'youtube', id:'VIDEO_ID', caption:'text' }
    ============================================================ */
 
 const GITHUB_USER = 'Bedo-Mostafa';
 
 /* ─────────────────────────────────────────────────────────────
-   STATIC_PROJECTS  ← ADD YOUR NEW PROJECT INSIDE THIS ARRAY
+   STATIC_PROJECTS
    ───────────────────────────────────────────────────────────── */
 const STATIC_PROJECTS = [
   {
     id: 'opengl-maze',
     title: '3D OpenGL Maze Explorer',
-    desc: 'A hand-crafted 3D maze assembled vertex-by-vertex on raw OpenGL — no engine scaffolding, no shortcuts. Custom GLSL shaders handle every lighting calculation, and Phong illumination reacts in real-time as you navigate the first-person camera through designed corridors.',
+    shortDesc: 'First-person 3D maze built vertex-by-vertex on raw OpenGL with custom GLSL shaders.',
+    fullDesc: `A hand-crafted 3D maze assembled vertex-by-vertex on raw OpenGL — no engine scaffolding, no shortcuts.
+
+Every piece of geometry is defined manually using VAOs, VBOs, and EBOs. Custom GLSL shaders handle every lighting calculation, and Phong illumination reacts in real-time as you navigate the first-person camera through designed corridors.
+
+The goal was to understand what engines hide from you: MVP matrix transformations, the depth buffer, texture mapping coordinates, and how a real-time render loop actually works at the metal.`,
     tags: ['C++', 'OpenGL', 'GLSL', 'Graphics'],
     tagColors: ['cyan', 'orange', 'purple', 'green'],
+    tools: [
+      { name: 'C++', icon: 'fa-solid fa-code', color: 'orange' },
+      { name: 'OpenGL 3.3', icon: 'fa-solid fa-cube', color: 'cyan' },
+      { name: 'GLSL Shaders', icon: 'fa-solid fa-wand-magic-sparkles', color: 'purple' },
+      { name: 'GLM Math Library', icon: 'fa-solid fa-square-root-variable', color: 'green' },
+      { name: 'GLFW', icon: 'fa-solid fa-window-maximize', color: 'cyan' },
+    ],
     icon: 'fa-solid fa-cube',
     category: 'graphics',
     github: 'https://github.com/Bedo-Mostafa',
@@ -46,21 +55,31 @@ const STATIC_PROJECTS = [
     featured: true,
     scoreUnlock: 0,
     media: [
-      /* Add media here — examples:
-         { type: 'image', src: 'https://i.imgur.com/XXXXX.png', caption: 'Maze corridor with Phong lighting' }
-         { type: 'youtube', id: 'YOUTUBE_VIDEO_ID', caption: 'Gameplay walkthrough' }
+      /* Add your screenshots / videos:
+         { type: 'image', src: 'https://...', caption: 'Maze corridor with Phong lighting' }
+         { type: 'youtube', id: 'YOUR_VIDEO_ID', caption: 'Gameplay walkthrough' }
       */
     ],
   },
   {
     id: 'physics-prototype',
     title: 'Low-Level 2D Physics Prototype',
-    desc: 'Physics without a safety net — Box2D called directly, game-loop hand-rolled. Every collision manifold, every impulse response, every frame paced by code rather than an editor. Built to feel what engines hide from you.',
+    shortDesc: 'Box2D called directly, game-loop hand-rolled — physics without an engine safety net.',
+    fullDesc: `Physics without a safety net — Box2D called directly, game-loop hand-rolled.
+
+Every collision manifold, every impulse response, every frame paced by code rather than an editor. The prototype demonstrates rigid body dynamics, joint constraints, and custom collision filtering — all wired up by hand with no game engine in between.
+
+Built to feel what engines hide from you: how a fixed timestep accumulator prevents spiral-of-death frame drops, and how collision callbacks map to actual gameplay events.`,
     tags: ['C++', 'Box2D', 'Physics', '2D'],
     tagColors: ['orange', 'cyan', 'green', 'cyan'],
+    tools: [
+      { name: 'C++', icon: 'fa-solid fa-code', color: 'orange' },
+      { name: 'Box2D', icon: 'fa-solid fa-atom', color: 'cyan' },
+      { name: 'SDL2', icon: 'fa-solid fa-display', color: 'green' },
+    ],
     icon: 'fa-solid fa-atom',
     category: 'systems',
-    //github: 'https://github.com/Bedo-Mostafa',
+    github: null,
     demo: null,
     featured: true,
     scoreUnlock: 0,
@@ -69,9 +88,20 @@ const STATIC_PROJECTS = [
   {
     id: 'tick-tock',
     title: 'Tick Tock Treasure',
-    desc: 'Seconds vanish, stakes rise — a 3D treasure hunt designed around the anxiety of a countdown. Player movement, environment interaction, and collectible logic wire together to create something that feels urgent even on your third run.',
+    shortDesc: '3D treasure hunt designed around countdown anxiety — urgency that grows every run.',
+    fullDesc: `Seconds vanish, stakes rise — a 3D treasure hunt designed around the anxiety of a countdown.
+
+Player movement, environment interaction, and collectible logic wire together to create something that feels urgent even on your third run. The level geometry was designed to give the player just enough navigational clarity that the timer, not confusion, creates the pressure.
+
+Key systems: Unity's character controller extended with custom physics responses, a dynamic UI that reacts to time remaining, and an item spawning system that randomises treasure positions each session.`,
     tags: ['Unity', 'C#', '3D', 'Adventure'],
     tagColors: ['cyan', 'green', 'orange', 'purple'],
+    tools: [
+      { name: 'Unity', icon: 'fa-solid fa-gamepad', color: 'cyan' },
+      { name: 'C#', icon: 'fa-solid fa-hashtag', color: 'green' },
+      { name: 'Unity Physics', icon: 'fa-solid fa-atom', color: 'orange' },
+      { name: 'Cinemachine', icon: 'fa-solid fa-video', color: 'purple' },
+    ],
     icon: 'fa-solid fa-gem',
     category: 'unity',
     github: 'https://github.com/Bedo-Mostafa',
@@ -83,9 +113,20 @@ const STATIC_PROJECTS = [
   {
     id: '2d-side-scroller',
     title: '2D Side-Scrolling Adventure',
-    desc: 'Layers of hazards, physics-driven momentum, and level geometry that communicates before the player even lands. Collision zones are contextual, not blunt — the jump arc does the teaching.',
+    shortDesc: 'Physics-driven platformer with layered hazards and contextual collision zones.',
+    fullDesc: `Layers of hazards, physics-driven momentum, and level geometry that communicates before the player even lands.
+
+Collision zones are contextual, not blunt — the jump arc does the teaching. Each obstacle is spaced to let the player feel momentum before punishing them for losing it. The camera system uses a look-ahead offset so fast movement never feels blind.
+
+Key features: custom 2D character controller, parallax background layers, animated sprite state machine, hazard zones with screen-shake feedback, and a checkpoint system that saves progress without breaking flow.`,
     tags: ['Unity', 'C#', '2D', 'Platformer'],
     tagColors: ['cyan', 'green', 'orange', 'cyan'],
+    tools: [
+      { name: 'Unity', icon: 'fa-solid fa-gamepad', color: 'cyan' },
+      { name: 'C#', icon: 'fa-solid fa-hashtag', color: 'green' },
+      { name: 'Unity 2D Physics', icon: 'fa-solid fa-atom', color: 'orange' },
+      { name: 'Unity Animator', icon: 'fa-solid fa-film', color: 'purple' },
+    ],
     icon: 'fa-solid fa-gamepad',
     category: 'unity',
     github: 'https://github.com/Bedo-Mostafa',
@@ -97,9 +138,20 @@ const STATIC_PROJECTS = [
   {
     id: 'domino-jam',
     title: 'Domino — Egypt Game Jam 2nd Place',
-    desc: "Shipped under jam pressure with full rule enforcement: placement validity, turn sequencing, score tracking, and stable scene transitions. The kind of submission that doesn't crash on the demo table. This one didn't.",
+    shortDesc: 'Fully rule-enforced domino game shipped under jam pressure. Didn\'t crash at the demo table.',
+    fullDesc: `Shipped under jam pressure with full rule enforcement: placement validity, turn sequencing, score tracking, and stable scene transitions.
+
+Built in 48 hours for the Egypt Game Jam hosted by ITI. The challenge wasn't just making a playable game — it was making a correct domino game. Every placement is validated against adjacency and pip-matching rules. The AI opponent uses a weighted decision tree to pick the best valid tile.
+
+The kind of submission that doesn't crash on the demo table. This one didn't. Won 2nd place out of all competing teams.`,
     tags: ['Unity', 'C#', 'Game Jam', 'Board Game'],
     tagColors: ['cyan', 'green', 'orange', 'purple'],
+    tools: [
+      { name: 'Unity', icon: 'fa-solid fa-gamepad', color: 'cyan' },
+      { name: 'C#', icon: 'fa-solid fa-hashtag', color: 'green' },
+      { name: 'AI / Decision Tree', icon: 'fa-solid fa-brain', color: 'orange' },
+      { name: 'UI Toolkit', icon: 'fa-solid fa-layer-group', color: 'purple' },
+    ],
     icon: 'fa-solid fa-trophy',
     category: 'unity',
     github: 'https://github.com/Bedo-Mostafa',
@@ -111,9 +163,20 @@ const STATIC_PROJECTS = [
   {
     id: 'kg-webgl',
     title: 'Educational WebGL Games (KG1 & KG2)',
-    desc: 'Two browser-native games built for kindergarteners — zero friction, pure interaction. Each mechanic is a cognitive exercise in disguise: shape recognition, sequencing, spatial awareness. Ships in a browser tab; no install, no barrier.',
+    shortDesc: 'Browser-native games for kindergarteners — cognitive exercises disguised as play.',
+    fullDesc: `Two browser-native games built for kindergarteners — zero friction, pure interaction.
+
+Each mechanic is a cognitive exercise in disguise: shape recognition, sequencing, spatial awareness. The games were designed with a UX-first approach — a five-year-old should never need to read a tutorial. Every interaction is discoverable through play.
+
+Commissioned by Whitton Publishing. Ships in a browser tab with no install, no loading screen that loses young attention spans. Built with Unity's WebGL pipeline and optimised for low-end school hardware.`,
     tags: ['Unity', 'WebGL', 'Educational', 'C#'],
     tagColors: ['cyan', 'orange', 'green', 'green'],
+    tools: [
+      { name: 'Unity', icon: 'fa-solid fa-gamepad', color: 'cyan' },
+      { name: 'C#', icon: 'fa-solid fa-hashtag', color: 'green' },
+      { name: 'WebGL Export', icon: 'fa-brands fa-chrome', color: 'orange' },
+      { name: 'Educational UX Design', icon: 'fa-solid fa-child', color: 'purple' },
+    ],
     icon: 'fa-solid fa-children',
     category: 'webgl',
     github: 'https://github.com/Bedo-Mostafa',
@@ -123,56 +186,218 @@ const STATIC_PROJECTS = [
     media: [],
   },
 
-  /* ══════════════════════════════════════════════════════════
-     ↓  PASTE YOUR NEW PROJECT OBJECT BELOW THIS LINE  ↓
-     ══════════════════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════════════
+     ↓  ADD YOUR NEW PROJECTS BELOW THIS LINE  ↓
+     ══════════════════════════════════════════════════════ */
 
 
-  /* ══════════════════════════════════════════════════════════
-     ↑  PASTE YOUR NEW PROJECT OBJECT ABOVE THIS LINE  ↑
-     ══════════════════════════════════════════════════════════ */
+  /* ══════════════════════════════════════════════════════
+     ↑  ADD YOUR NEW PROJECTS ABOVE THIS LINE  ↑
+     ══════════════════════════════════════════════════════ */
 ];
 
 /* ─────────────────────────────────────────────────────────────
    HELPERS
    ───────────────────────────────────────────────────────────── */
 function tagColorClass(color) {
-  const map = { cyan: 'tag-cyan', orange: 'tag-orange', green: 'tag-green', purple: 'tag-purple' };
+  var map = { cyan: 'tag-cyan', orange: 'tag-orange', green: 'tag-green', purple: 'tag-purple' };
   return map[color] || 'tag-cyan';
 }
 
-function buildMediaHTML(media) {
-  if (!media || media.length === 0) return '';
-  const items = media.map((m, i) => {
-    if (m.type === 'youtube') {
-      return '<div class="media-item"><div class="media-thumb yt-thumb" data-ytid="' + m.id + '" title="Play video"><img src="https://img.youtube.com/vi/' + m.id + '/mqdefault.jpg" alt="' + (m.caption || 'Video') + '" loading="lazy"><div class="yt-play-btn"><i class="fa-solid fa-play"></i></div></div>' + (m.caption ? '<div class="media-caption">' + m.caption + '</div>' : '') + '</div>';
-    }
-    if (m.type === 'image') {
-      return '<div class="media-item"><img class="media-thumb-img" src="' + m.src + '" alt="' + (m.caption || 'Screenshot') + '" loading="lazy" onclick="openLightbox(\'' + m.src + '\',\'' + (m.caption || '').replace(/'/g, "\\'") + '\')">' + (m.caption ? '<div class="media-caption">' + m.caption + '</div>' : '') + '</div>';
-    }
-    return '';
+/* ─────────────────────────────────────────────────────────────
+   CARD RENDER  (compact — click opens the modal)
+   ───────────────────────────────────────────────────────────── */
+function renderCard(proj) {
+  var tagsHtml = proj.tags.slice(0, 3).map(function (t, i) {
+    return '<span class="tag ' + tagColorClass((proj.tagColors || [])[i] || 'cyan') + '">' + t + '</span>';
   }).join('');
-  return '<div class="proj-media">' + items + '</div>';
+
+  var lockedAttr = proj.scoreUnlock > 0 ? ' data-score-unlock="' + proj.scoreUnlock + '"' : '';
+  var lockedClass = proj.scoreUnlock > 0 ? ' proj-locked' : '';
+
+  var lockedOverlay = proj.scoreUnlock > 0
+    ? '<div class="card-locked-overlay">'
+    + '<div class="locked-badge"><i class="fa-solid fa-lock"></i> Reach ' + proj.scoreUnlock + ' pts to unlock</div>'
+    + '<button class="btn-play-unlock" onclick="event.stopPropagation();openMiniGameFromCard()" title="Play mini-game to unlock">'
+    + '<i class="fa-solid fa-gamepad"></i> Play to Unlock</button>'
+    + '</div>'
+    : '';
+
+  var media = proj.media || [];
+  var thumbHtml;
+  if (media.length > 0) {
+    if (media[0].type === 'youtube') {
+      thumbHtml = '<div class="card-thumb card-thumb-yt">'
+        + '<img src="https://img.youtube.com/vi/' + media[0].id + '/mqdefault.jpg" alt="" loading="lazy">'
+        + '<div class="card-thumb-play"><i class="fa-solid fa-play"></i></div>'
+        + '</div>';
+    } else {
+      thumbHtml = '<div class="card-thumb"><img src="' + media[0].src + '" alt="" loading="lazy"></div>';
+    }
+  } else {
+    thumbHtml = '<div class="card-thumb card-thumb-placeholder"><i class="' + proj.icon + '"></i></div>';
+  }
+
+  return '<article class="proj-card reveal' + lockedClass + '" data-category="' + proj.category
+    + '" data-id="' + proj.id + '"' + lockedAttr + ' role="button" tabindex="0">'
+    + lockedOverlay
+    + thumbHtml
+    + '<div class="card-body">'
+    + '<div class="card-title">' + proj.title + '</div>'
+    + '<div class="card-short-desc">' + (proj.shortDesc || proj.desc || '') + '</div>'
+    + '<div class="card-footer">'
+    + '<div class="proj-tags">' + tagsHtml + '</div>'
+    + '<span class="card-view-more">View details <i class="fa-solid fa-arrow-right"></i></span>'
+    + '</div>'
+    + '</div>'
+    + '</article>';
 }
 
-function renderCard(proj) {
-  const tagsHtml = proj.tags.map((t, i) =>
-    '<span class="tag ' + tagColorClass(proj.tagColors?.[i] || 'cyan') + '">' + t + '</span>'
-  ).join('');
-  const githubLink = proj.github ? '<a href="' + proj.github + '" target="_blank" rel="noopener" class="proj-link" title="GitHub"><i class="fa-brands fa-github"></i></a>' : '';
-  const demoLink = proj.demo ? '<a href="' + proj.demo + '" target="_blank" rel="noopener" class="proj-link" title="Live Demo"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>' : '';
-  const mediaHTML = buildMediaHTML(proj.media);
-  const lockedAttr = proj.scoreUnlock > 0 ? ' data-score-unlock="' + proj.scoreUnlock + '"' : '';
-  const lockedClass = proj.scoreUnlock > 0 ? ' proj-locked' : '';
-  const lockedBadge = proj.scoreUnlock > 0 ? '<div class="locked-badge"><i class="fa-solid fa-lock"></i> Reach ' + proj.scoreUnlock + ' pts in the mini-game to unlock</div>' : '';
-  return '<article class="proj-card reveal' + lockedClass + '" data-category="' + proj.category + '" data-id="' + proj.id + '"' + lockedAttr + '>' + lockedBadge + '<div class="proj-card-top"><div class="proj-icon"><i class="' + proj.icon + '"></i></div><div class="proj-links">' + githubLink + demoLink + '</div></div><div class="proj-title">' + proj.title + '</div><div class="proj-desc">' + proj.desc + '</div>' + mediaHTML + '<div class="proj-tags">' + tagsHtml + '</div></article>';
+/* ─────────────────────────────────────────────────────────────
+   PROJECT DETAIL MODAL
+   ───────────────────────────────────────────────────────────── */
+function ensureModal() {
+  if (document.getElementById('proj-modal')) return;
+  var modal = document.createElement('div');
+  modal.id = 'proj-modal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.innerHTML =
+    '<div class="pm-backdrop"></div>'
+    + '<div class="pm-panel">'
+    + '<button class="pm-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>'
+    + '<div class="pm-scroll">'
+    + '<div class="pm-media-hero" id="pm-media-hero"></div>'
+    + '<div class="pm-content">'
+    + '<div class="pm-header">'
+    + '<div class="pm-icon" id="pm-icon"></div>'
+    + '<div class="pm-header-text">'
+    + '<h2 class="pm-title" id="pm-title"></h2>'
+    + '<div class="pm-tags" id="pm-tags"></div>'
+    + '</div>'
+    + '</div>'
+    + '<div class="pm-links" id="pm-links"></div>'
+    + '<div class="pm-section-label"><i class="fa-solid fa-align-left"></i> Overview</div>'
+    + '<div class="pm-desc" id="pm-desc"></div>'
+    + '<div class="pm-tools-wrap" id="pm-tools-wrap">'
+    + '<div class="pm-section-label"><i class="fa-solid fa-wrench"></i> Tools &amp; Technologies</div>'
+    + '<div class="pm-tools" id="pm-tools"></div>'
+    + '</div>'
+    + '<div class="pm-gallery-wrap" id="pm-gallery-wrap">'
+    + '<div class="pm-section-label"><i class="fa-solid fa-images"></i> Media &amp; Screenshots</div>'
+    + '<div class="pm-gallery" id="pm-gallery"></div>'
+    + '</div>'
+    + '</div>'
+    + '</div>'
+    + '</div>';
+  document.body.appendChild(modal);
+  modal.querySelector('.pm-backdrop').addEventListener('click', closeProjectModal);
+  modal.querySelector('.pm-close').addEventListener('click', closeProjectModal);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && modal.classList.contains('active')) closeProjectModal();
+  });
 }
+
+function openProjectModal(proj) {
+  ensureModal();
+  var modal = document.getElementById('proj-modal');
+
+  document.getElementById('pm-icon').innerHTML = '<i class="' + proj.icon + '"></i>';
+  document.getElementById('pm-title').textContent = proj.title;
+
+  document.getElementById('pm-tags').innerHTML = proj.tags.map(function (t, i) {
+    return '<span class="tag ' + tagColorClass((proj.tagColors || [])[i] || 'cyan') + '">' + t + '</span>';
+  }).join('');
+
+  var linksHtml = '';
+  if (proj.github) linksHtml += '<a href="' + proj.github + '" target="_blank" rel="noopener" class="btn btn-ghost pm-link-btn"><i class="fa-brands fa-github"></i> GitHub</a>';
+  if (proj.demo) linksHtml += '<a href="' + proj.demo + '" target="_blank" rel="noopener" class="btn btn-primary pm-link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>';
+  document.getElementById('pm-links').innerHTML = linksHtml;
+
+  var descText = proj.fullDesc || proj.desc || '';
+  document.getElementById('pm-desc').innerHTML = descText
+    .split(/\n\n+/)
+    .map(function (p) { return '<p>' + p.replace(/\n/g, '<br>') + '</p>'; })
+    .join('');
+
+  var tools = proj.tools || [];
+  var toolsWrap = document.getElementById('pm-tools-wrap');
+  if (tools.length > 0) {
+    document.getElementById('pm-tools').innerHTML = tools.map(function (t) {
+      return '<div class="pm-tool pm-tool-' + (t.color || 'cyan') + '">'
+        + '<i class="' + t.icon + '"></i><span>' + t.name + '</span></div>';
+    }).join('');
+    toolsWrap.style.display = '';
+  } else {
+    toolsWrap.style.display = 'none';
+  }
+
+  var media = proj.media || [];
+  var heroEl = document.getElementById('pm-media-hero');
+  if (media.length > 0) {
+    var first = media[0];
+    if (first.type === 'youtube') {
+      heroEl.innerHTML = '<div class="pm-hero-yt" data-ytid="' + first.id + '">'
+        + '<img src="https://img.youtube.com/vi/' + first.id + '/hqdefault.jpg" alt="' + (first.caption || '') + '">'
+        + '<div class="pm-hero-play"><i class="fa-solid fa-play"></i></div>'
+        + '</div>';
+      heroEl.querySelector('.pm-hero-yt').addEventListener('click', function () {
+        var id = this.dataset.ytid;
+        this.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>';
+      });
+    } else {
+      heroEl.innerHTML = '<img class="pm-hero-img" src="' + first.src + '" alt="' + (first.caption || '') + '" onclick="openLightbox(\'' + first.src.replace(/'/g, "\\'") + '\',\'' + (first.caption || '').replace(/'/g, "\\'") + '\')">';
+    }
+  } else {
+    heroEl.innerHTML = '<div class="pm-hero-placeholder"><i class="' + proj.icon + '"></i><span>Add images or a YouTube video to your project entry to show them here</span></div>';
+  }
+
+  var galleryWrap = document.getElementById('pm-gallery-wrap');
+  var galleryEl = document.getElementById('pm-gallery');
+  var rest = media.slice(1);
+  if (rest.length > 0) {
+    galleryEl.innerHTML = rest.map(function (m) {
+      if (m.type === 'youtube') {
+        return '<div class="pm-gal-item pm-gal-yt" data-ytid="' + m.id + '">'
+          + '<img src="https://img.youtube.com/vi/' + m.id + '/mqdefault.jpg" alt="' + (m.caption || '') + '">'
+          + '<div class="pm-gal-play"><i class="fa-solid fa-play"></i></div>'
+          + (m.caption ? '<div class="pm-gal-cap">' + m.caption + '</div>' : '')
+          + '</div>';
+      }
+      return '<div class="pm-gal-item" onclick="openLightbox(\'' + m.src.replace(/'/g, "\\'") + '\',\'' + (m.caption || '').replace(/'/g, "\\'") + '\')">'
+        + '<img src="' + m.src + '" alt="' + (m.caption || '') + '" loading="lazy">'
+        + (m.caption ? '<div class="pm-gal-cap">' + m.caption + '</div>' : '')
+        + '</div>';
+    }).join('');
+    galleryEl.querySelectorAll('.pm-gal-yt').forEach(function (el) {
+      el.addEventListener('click', function () {
+        var id = this.dataset.ytid;
+        var cap = this.querySelector('.pm-gal-cap');
+        var capHtml = cap ? cap.outerHTML : '';
+        this.innerHTML = '<iframe src="https://www.youtube.com/embed/' + id + '?autoplay=1" allow="autoplay;encrypted-media;picture-in-picture" allowfullscreen></iframe>' + capHtml;
+      });
+    });
+    galleryWrap.style.display = '';
+  } else {
+    galleryWrap.style.display = 'none';
+  }
+
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+  modal.querySelector('.pm-scroll').scrollTop = 0;
+}
+
+function closeProjectModal() {
+  var modal = document.getElementById('proj-modal');
+  if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+}
+window.closeProjectModal = closeProjectModal;
 
 /* ─────────────────────────────────────────────────────────────
    LIGHTBOX
    ───────────────────────────────────────────────────────────── */
 function openLightbox(src, caption) {
-  let lb = document.getElementById('proj-lightbox');
+  var lb = document.getElementById('proj-lightbox');
   if (!lb) {
     lb = document.createElement('div');
     lb.id = 'proj-lightbox';
@@ -192,34 +417,17 @@ function closeLightbox() {
   if (lb) { lb.classList.remove('active'); document.body.style.overflow = ''; }
 }
 window.openLightbox = openLightbox;
+window.closeLightbox = closeLightbox;
 
 /* ─────────────────────────────────────────────────────────────
-   YOUTUBE EMBED
-   ───────────────────────────────────────────────────────────── */
-function bindYouTubeThumbs(root) {
-  root.querySelectorAll('.yt-thumb').forEach(function (thumb) {
-    thumb.addEventListener('click', function () {
-      var id = thumb.dataset.ytid;
-      var iframe = document.createElement('iframe');
-      iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1';
-      iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
-      iframe.allowFullscreen = true;
-      iframe.className = 'yt-iframe';
-      thumb.replaceWith(iframe);
-    });
-  });
-}
-
-/* ─────────────────────────────────────────────────────────────
-   SCORE-BASED UNLOCK  (called from minigame.js)
+   SCORE-BASED UNLOCK
    ───────────────────────────────────────────────────────────── */
 function unlockProjectsUpTo(score) {
   document.querySelectorAll('.proj-card.proj-locked').forEach(function (card) {
-    var needed = parseInt(card.dataset.scoreUnlock, 10);
-    if (score >= needed) {
+    if (score >= parseInt(card.dataset.scoreUnlock, 10)) {
       card.classList.remove('proj-locked');
-      var badge = card.querySelector('.locked-badge');
-      if (badge) badge.remove();
+      var overlay = card.querySelector('.card-locked-overlay');
+      if (overlay) overlay.remove();
       card.classList.add('just-unlocked');
       setTimeout(function () { card.classList.remove('just-unlocked'); }, 2500);
     }
@@ -228,24 +436,122 @@ function unlockProjectsUpTo(score) {
 window.unlockProjectsUpTo = unlockProjectsUpTo;
 
 /* ─────────────────────────────────────────────────────────────
-   GITHUB LIVE REPOS
+   OPEN MINI-GAME FROM LOCKED CARD
    ───────────────────────────────────────────────────────────── */
-async function fetchGitHubRepos(grid) {
+function openMiniGameFromCard() {
+  var overlay = document.getElementById('mini-game-overlay');
+  if (!overlay) return;
+  overlay.classList.add('active');
+  if (window.MiniGame) window.MiniGame.init();
+}
+window.openMiniGameFromCard = openMiniGameFromCard;
+
+/* ─────────────────────────────────────────────────────────────
+   BIND CARD → MODAL
+   ───────────────────────────────────────────────────────────── */
+function bindCardEvents(card, proj) {
+  function tryOpen(e) {
+    if (e.target.closest('.btn-play-unlock')) return;
+    if (card.classList.contains('proj-locked')) return;
+    openProjectModal(proj);
+  }
+  card.addEventListener('click', tryOpen);
+  card.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tryOpen(e); }
+  });
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CAROUSEL
+   ───────────────────────────────────────────────────────────── */
+function buildCarousel(container) {
+  var wrapper = document.createElement('div');
+  wrapper.className = 'proj-carousel-wrapper';
+  var track = document.createElement('div');
+  track.className = 'proj-carousel-track';
+  track.id = 'projects-carousel-track';
+  while (container.firstChild) track.appendChild(container.firstChild);
+  wrapper.appendChild(track);
+
+  var prevBtn = document.createElement('button');
+  prevBtn.className = 'carousel-arrow carousel-prev';
+  prevBtn.innerHTML = '<i class="fa-solid fa-chevron-left"></i>';
+  prevBtn.setAttribute('aria-label', 'Previous');
+
+  var nextBtn = document.createElement('button');
+  nextBtn.className = 'carousel-arrow carousel-next';
+  nextBtn.innerHTML = '<i class="fa-solid fa-chevron-right"></i>';
+  nextBtn.setAttribute('aria-label', 'Next');
+
+  var dots = document.createElement('div');
+  dots.className = 'carousel-dots';
+
+  container.appendChild(prevBtn);
+  container.appendChild(wrapper);
+  container.appendChild(nextBtn);
+  container.appendChild(dots);
+
+  function getStep() {
+    var c = track.querySelector('.proj-card');
+    return c ? c.offsetWidth + 22 : 360;
+  }
+
+  prevBtn.addEventListener('click', function () { track.scrollBy({ left: -getStep(), behavior: 'smooth' }); });
+  nextBtn.addEventListener('click', function () { track.scrollBy({ left: getStep(), behavior: 'smooth' }); });
+
+  function updateControls() {
+    prevBtn.classList.toggle('carousel-arrow-dim', track.scrollLeft <= 4);
+    nextBtn.classList.toggle('carousel-arrow-dim', track.scrollLeft + track.clientWidth >= track.scrollWidth - 4);
+    var visible = track.querySelectorAll('.proj-card:not([style*="display: none"])');
+    var perPage = Math.max(1, Math.round(track.clientWidth / getStep()));
+    var pages = Math.ceil(visible.length / perPage);
+    var current = Math.min(pages - 1, Math.round(track.scrollLeft / (getStep() * perPage)));
+    if (dots.childElementCount !== pages) {
+      dots.innerHTML = '';
+      for (var i = 0; i < pages; i++) {
+        var d = document.createElement('span');
+        d.className = 'carousel-dot' + (i === current ? ' active' : '');
+        (function (idx) {
+          d.addEventListener('click', function () {
+            track.scrollTo({ left: idx * getStep() * perPage, behavior: 'smooth' });
+          });
+        })(i);
+        dots.appendChild(d);
+      }
+    } else {
+      dots.querySelectorAll('.carousel-dot').forEach(function (d, i) {
+        d.classList.toggle('active', i === current);
+      });
+    }
+  }
+
+  track.addEventListener('scroll', updateControls, { passive: true });
+  window.addEventListener('resize', updateControls);
+  updateControls();
+  return track;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   GITHUB FETCH
+   ───────────────────────────────────────────────────────────── */
+async function fetchGitHubReposCarousel(track) {
   try {
     var res = await fetch('https://api.github.com/users/' + GITHUB_USER + '/repos?sort=updated&per_page=12');
-    if (!res.ok) throw new Error('bad response');
+    if (!res.ok) throw new Error('bad');
     var repos = await res.json();
     var staticIds = new Set(STATIC_PROJECTS.map(function (p) { return p.id; }));
-    var langColorMap = { 'C#': 'cyan', 'C++': 'orange', 'C': 'orange', 'Python': 'green', 'JavaScript': 'green', 'HTML': 'purple' };
+    var langColor = { 'C#': 'cyan', 'C++': 'orange', 'C': 'orange', 'Python': 'green', 'JavaScript': 'green', 'HTML': 'purple' };
     repos.filter(function (r) { return !r.fork && r.name !== GITHUB_USER; }).forEach(function (repo) {
       if (staticIds.has(repo.name)) return;
       var lang = repo.language || 'Code';
       var proj = {
         id: repo.name,
         title: repo.name.replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); }),
-        desc: repo.description || 'A project from my GitHub repository.',
+        shortDesc: repo.description || 'A project from my GitHub.',
+        fullDesc: repo.description || 'A project from my GitHub repository.',
         tags: [lang].concat((repo.topics || []).slice(0, 2)).filter(Boolean),
-        tagColors: [langColorMap[lang] || 'cyan', 'purple', 'green'],
+        tagColors: [langColor[lang] || 'cyan', 'purple', 'green'],
+        tools: lang !== 'Code' ? [{ name: lang, icon: 'fa-solid fa-code', color: langColor[lang] || 'cyan' }] : [],
         icon: 'fa-brands fa-github',
         category: 'github',
         github: repo.html_url,
@@ -257,14 +563,16 @@ async function fetchGitHubRepos(grid) {
       var el = document.createElement('div');
       el.innerHTML = renderCard(proj).trim();
       var card = el.firstElementChild;
-      grid.appendChild(card);
-      bindYouTubeThumbs(card);
+      var loader = track.querySelector('.gh-loading');
+      if (loader) track.insertBefore(card, loader); else track.appendChild(card);
+      bindCardEvents(card, proj);
       if (window._revealObserver) window._revealObserver.observe(card);
     });
-    var loader = grid.querySelector('.gh-loading');
+    var loader = track.querySelector('.gh-loading');
     if (loader) loader.remove();
+    track.dispatchEvent(new Event('scroll'));
   } catch (e) {
-    var loader = grid.querySelector('.gh-loading');
+    var loader = track.querySelector('.gh-loading');
     if (loader) loader.textContent = '// github fetch failed — check network';
   }
 }
@@ -273,31 +581,37 @@ async function fetchGitHubRepos(grid) {
    INIT
    ───────────────────────────────────────────────────────────── */
 function initProjects() {
-  var grid = document.getElementById('projects-grid');
-  if (!grid) return;
+  var container = document.getElementById('projects-grid');
+  if (!container) return;
+
+  container.classList.add('proj-carousel-container');
 
   STATIC_PROJECTS.forEach(function (proj) {
     var el = document.createElement('div');
     el.innerHTML = renderCard(proj).trim();
     var card = el.firstElementChild;
-    grid.appendChild(card);
-    bindYouTubeThumbs(card);
+    container.appendChild(card);
+    bindCardEvents(card, proj);
   });
 
-  var loader = document.createElement('div');
-  loader.className = 'gh-loading';
-  loader.innerHTML = '<i class="fa-brands fa-github"></i>&nbsp; fetching repos from github...';
-  grid.appendChild(loader);
-  fetchGitHubRepos(grid);
+  var loaderCard = document.createElement('div');
+  loaderCard.className = 'gh-loading proj-card';
+  loaderCard.innerHTML = '<i class="fa-brands fa-github"></i>&nbsp; fetching repos…';
+  container.appendChild(loaderCard);
+
+  var track = buildCarousel(container);
+  fetchGitHubReposCarousel(track);
 
   document.querySelectorAll('.filter-btn').forEach(function (btn) {
     btn.addEventListener('click', function () {
       document.querySelectorAll('.filter-btn').forEach(function (b) { b.classList.remove('active'); });
       btn.classList.add('active');
       var filter = btn.dataset.filter;
-      document.querySelectorAll('.proj-card').forEach(function (card) {
+      track.querySelectorAll('.proj-card').forEach(function (card) {
         card.style.display = (filter === 'all' || card.dataset.category === filter) ? '' : 'none';
       });
+      track.scrollTo({ left: 0, behavior: 'smooth' });
+      setTimeout(function () { track.dispatchEvent(new Event('scroll')); }, 50);
     });
   });
 }
