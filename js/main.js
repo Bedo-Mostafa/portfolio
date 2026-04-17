@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (cursor && window.matchMedia('(pointer: fine)').matches) {
     document.addEventListener('mousemove', e => {
       cursor.style.left = e.clientX + 'px';
-      cursor.style.top  = e.clientY + 'px';
+      cursor.style.top = e.clientY + 'px';
     });
     document.querySelectorAll('a, button, .proj-card, .filter-btn').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
@@ -51,14 +51,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Terminal typewriter ── */
   const lines = [
-    { type: 'cmd',  text: 'whoami' },
-    { type: 'out',  text: 'abdelrhman_mostafa — game developer' },
-    { type: 'cmd',  text: 'cat skills.txt | grep primary' },
-    { type: 'out',  text: 'C# · Unity · C++ · OpenGL · Box2D' },
-    { type: 'cmd',  text: 'ls ./awards/' },
-    { type: 'out',  text: '2nd_EgyptGameJam.exe  3rd_MiniJam.exe' },
-    { type: 'cmd',  text: 'echo $STATUS' },
-    { type: 'out',  text: 'open_to_work=true  location=Cairo,Egypt' },
+    { type: 'cmd', text: 'whoami' },
+    { type: 'out', text: 'abdelrhman_mostafa — game developer' },
+    { type: 'cmd', text: 'cat skills.txt | grep primary' },
+    { type: 'out', text: 'C# · Unity · C++ · OpenGL · Box2D' },
+    { type: 'cmd', text: 'ls ./awards/' },
+    { type: 'out', text: '2nd_EgyptGameJam.exe  3rd_MiniJam.exe' },
+    { type: 'cmd', text: 'echo $STATUS' },
+    { type: 'highlight', text: 'open_to_work=true', note: '  location=Cairo,Egypt' },
   ];
 
   const termBody = document.getElementById('term-body');
@@ -85,6 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
           li++;
           setTimeout(typeNext, 120);
         });
+      } else if (line.type === 'highlight') {
+        row.innerHTML = `<span class="t-out"><span class="t-highlight">${line.text}</span><span class="t-out-dim">${line.note || ''}</span></span>`;
+        row.style.opacity = '0';
+        termBody.appendChild(row);
+        setTimeout(() => { row.style.transition = 'opacity 0.3s'; row.style.opacity = '1'; }, 60);
+        li++;
+        setTimeout(typeNext, 220);
       } else {
         row.innerHTML = `<span class="t-out">${line.text}</span>`;
         row.style.opacity = '0';
@@ -125,13 +132,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Mini game overlay ── */
   const gameOverlay = document.getElementById('mini-game-overlay');
-  const gameTrigger = document.querySelector('.game-trigger');
-  const gameClose   = document.querySelector('.game-close');
+  const navGameLink = document.getElementById('nav-game-link');
+  const gameClose = document.querySelector('.game-close');
 
-  if (gameTrigger && gameOverlay) {
-    gameTrigger.addEventListener('click', () => {
+  if (navGameLink && gameOverlay) {
+    navGameLink.addEventListener('click', (e) => {
+      e.preventDefault();
       gameOverlay.classList.add('active');
       if (window.MiniGame) window.MiniGame.init();
+      // close mobile nav if open
+      if (navLinks) navLinks.classList.remove('open');
     });
   }
   if (gameClose && gameOverlay) {
@@ -141,9 +151,29 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  /* ── Fun Facts unlock (triggered by mini-game) ── */
+  window.unlockFunFacts = function () {
+    const section = document.getElementById('fun-facts');
+    if (!section || section.classList.contains('unlocked')) return;
+    section.classList.add('unlocked');
+    showToast('// fun_facts.txt unlocked');
+  };
+
+  function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'game-toast';
+    t.innerHTML = `<i class="fa-solid fa-terminal"></i> ${msg}`;
+    document.body.appendChild(t);
+    requestAnimationFrame(() => t.classList.add('show'));
+    setTimeout(() => {
+      t.classList.remove('show');
+      setTimeout(() => t.remove(), 400);
+    }, 3200);
+  }
+
   /* ── Active nav highlight on scroll ── */
   const sections = document.querySelectorAll('section[id]');
-  const navAs    = document.querySelectorAll('.nav-links a');
+  const navAs = document.querySelectorAll('.nav-links a');
   window.addEventListener('scroll', () => {
     let current = '';
     sections.forEach(s => {

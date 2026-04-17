@@ -12,16 +12,6 @@
     bg: '#0a1219',
   };
 
-  /* Score milestones that trigger a project popup in the game */
-  var SCORE_MILESTONES = STATIC_PROJECTS
-    .filter(p => p.scoreUnlock > 0)
-    .map(p => ({
-      score: p.scoreUnlock,
-      projectId: p.id,
-      label: p.title
-    }))
-    .sort((a, b) => a.score - b.score);
-
   var canvas, ctx, gameLoop, state, explosions;
   var keydownHandler, keyupHandler;
 
@@ -72,8 +62,7 @@
       over: false,
       started: false,
       keys: {},
-      milestonesSeen: new Set(),
-      popup: null,   /* { label, timer } */
+      funFactsUnlocked: false,
     };
   }
 
@@ -123,8 +112,10 @@
 
   /* ── RESTART (keeps canvas alive, re-uses same loop) ── */
   function doRestart() {
+    var wasUnlocked = state && state.funFactsUnlocked;
     resetState();
     state.started = true;
+    if (wasUnlocked) state.funFactsUnlocked = true;
   }
 
   /* ── SHOOT ── */
@@ -143,19 +134,6 @@
     ];
     var t = types[Math.floor(Math.random() * types.length)];
     state.enemies.push({ x: Math.random() * (canvas.width - 20) + 10, y: -16, angle: 0, ...t });
-  }
-
-  /* ── CHECK MILESTONES ── */
-  function checkMilestones(score) {
-    SCORE_MILESTONES.forEach(function (m) {
-      if (score >= m.score && !state.milestonesSeen.has(m.score)) {
-        state.milestonesSeen.add(m.score);
-        /* Unlock in the projects section */
-        if (window.unlockProjectsUpTo) window.unlockProjectsUpTo(score);
-        /* Show in-game popup */
-        state.popup = { label: m.label, timer: 220 };
-      }
-    });
   }
 
   /* ── TICK ── */
@@ -212,11 +190,13 @@
             var pts = e.pts;
             var ex = e.x, ey = e.y, ec = e.color;
             eArr.splice(ei2, 1);
-            var prevScore = state.score;
             state.score += pts;
             spawnExplosion(ex, ey, ec);
-            /* Milestone check after score update */
-            checkMilestones(state.score);
+            /* Unlock fun facts at 80 pts */
+            if (state.score >= 80 && !state.funFactsUnlocked) {
+              state.funFactsUnlocked = true;
+              if (window.unlockFunFacts) window.unlockFunFacts();
+            }
             break;
           }
         }
@@ -239,11 +219,6 @@
         player.invincible--;
       }
 
-      /* Popup timer */
-      if (state.popup) {
-        state.popup.timer--;
-        if (state.popup.timer <= 0) state.popup = null;
-      }
     }
 
     /* Stars always scroll */
@@ -283,8 +258,8 @@
       drawCentered('BYTE DODGER', canvas.height / 2 - 30, COLORS.accent, 18);
       drawCentered('Arrow / WASD to move   Space / Z to shoot', canvas.height / 2, COLORS.dim, 11);
       drawCentered('Touch: drag to move, tap to shoot', canvas.height / 2 + 20, COLORS.dim, 10);
-      drawCentered('Reach score milestones to UNLOCK PROJECTS', canvas.height / 2 + 42, COLORS.accent3, 10);
-      drawCentered('Press any key to start', canvas.height / 2 + 65, COLORS.accent2, 11);
+      drawCentered('Reach 80 pts → unlock fun_facts.txt in About', canvas.height / 2 + 42, COLORS.accent3, 10);
+      drawCentered('Press any key or tap to start', canvas.height / 2 + 62, COLORS.accent2, 11);
       drawHUD();
       return;
     }
@@ -356,32 +331,6 @@
 
     drawHUD();
 
-    /* In-game milestone popup */
-    if (state.popup) {
-      var t = state.popup.timer;
-      var fade = Math.min(1, t / 40, (220 - t) / 40);
-      var pW = Math.min(canvas.width - 20, 340);
-      var pH = 54;
-      var pX = (canvas.width - pW) / 2;
-      var pY = 36;
-      ctx.globalAlpha = fade;
-      ctx.fillStyle = 'rgba(10,18,25,0.93)';
-      roundRect(ctx, pX, pY, pW, pH, 4);
-      ctx.fill();
-      ctx.strokeStyle = COLORS.accent3;
-      ctx.lineWidth = 1;
-      roundRect(ctx, pX, pY, pW, pH, 4);
-      ctx.stroke();
-      ctx.font = 'bold 10px Share Tech Mono, monospace';
-      ctx.fillStyle = COLORS.accent3;
-      ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('PROJECT UNLOCKED', canvas.width / 2, pY + 10);
-      ctx.font = '11px Share Tech Mono, monospace';
-      ctx.fillStyle = '#ffffff';
-      ctx.fillText(state.popup.label, canvas.width / 2, pY + 30);
-      ctx.globalAlpha = 1;
-    }
-
     /* Game over screen */
     if (state.over) {
       ctx.fillStyle = 'rgba(4,8,13,0.8)';
@@ -389,12 +338,6 @@
       drawCentered('GAME OVER', canvas.height / 2 - 28, COLORS.accent2, 24);
       drawCentered('SCORE: ' + state.score, canvas.height / 2 + 6, COLORS.accent, 16);
       drawCentered('Press R to restart  |  Tap to restart', canvas.height / 2 + 36, COLORS.dim, 11);
-      /* Show unlocked projects hint */
-      var unlocked = [];
-      SCORE_MILESTONES.forEach(function (m) { if (state.score >= m.score) unlocked.push(m.label); });
-      if (unlocked.length > 0) {
-        drawCentered('Unlocked: ' + unlocked.length + ' project(s) in portfolio', canvas.height / 2 + 60, COLORS.accent3, 10);
-      }
     }
   }
 
@@ -409,14 +352,12 @@
     var hearts = '';
     for (var i = 0; i < state.lives; i++) hearts += '♥ ';
     ctx.fillText(hearts.trim(), canvas.width - 10, 10);
-    /* next milestone hint */
-    var next = null;
-    SCORE_MILESTONES.forEach(function (m) { if (!next && state.score < m.score) next = m; });
-    if (next && state.started && !state.over) {
+    /* unlock hint — only before unlocked */
+    if (state.started && !state.over && !state.funFactsUnlocked) {
       ctx.font = '9px Share Tech Mono, monospace';
       ctx.fillStyle = COLORS.accent3;
       ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-      ctx.fillText('Next unlock at ' + next.score + ' pts', canvas.width / 2, 10);
+      ctx.fillText('80 pts → unlock fun_facts.txt', canvas.width / 2, 10);
     }
   }
 

@@ -133,7 +133,7 @@ The constraint shaped the architecture: minimal abstractions, direct system wiri
     github: null,
     demo: 'https://abdelrhman-mostafa.itch.io/yallahwy',
     featured: true,
-    scoreUnlock: 50,
+    scoreUnlock: 0,
     media: [
       { type: 'image', src: 'assets/yallahwy/1.png', caption: 'Core gameplay – fast loop and immediate restart' },
       { type: 'image', src: 'assets/yallahwy/2.png', caption: 'Physics interaction – Box2D collision handling' },
@@ -163,7 +163,7 @@ The kind of submission that doesn't crash on the demo table. This one didn't. Wo
     github: 'https://github.com/Bedo-Mostafa/EGJ',
     demo: 'https://abdelrhman-mostafa.itch.io/a3dt-domino',
     featured: true,
-    scoreUnlock: 100,
+    scoreUnlock: 0,
     media: [
       //https://youtu.be/nK0kg0FuQmE?si=3Xk2BtFag8AdWoRh
       { type: 'youtube', id: 'nK0kg0FuQmE', caption: 'Gameplay walkthrough' }
@@ -190,7 +190,7 @@ Commissioned by Whitton Publishing. Ships in a browser tab with no install, no l
     category: 'webgl',
     demo: null,
     featured: false,
-    scoreUnlock: 150,
+    scoreUnlock: 0,
     media: [
       { type: 'image', src: 'assets/KG1&2/1.png', caption: 'Main menu – phonics learning entry screen' },
       { type: 'image', src: 'assets/KG1&2/2.png', caption: 'Interactive stage – character responding to player input' },
@@ -213,6 +213,33 @@ Commissioned by Whitton Publishing. Ships in a browser tab with no install, no l
      ↓  ADD YOUR NEW PROJECTS BELOW THIS LINE  ↓
      ══════════════════════════════════════════════════════ */
 
+  {
+    id: 'byte-dodger',
+    title: 'Byte Dodger — Browser Game',
+    shortDesc: 'Vanilla JS space shooter built from scratch: Canvas 2D, particle system, enemy AI, touch controls. Zero libraries.',
+    fullDesc: `A fully self-contained browser game written in vanilla JavaScript — no frameworks, no game libraries, no shortcuts.
+
+The canvas render loop runs at 60fps with a custom entity system managing the player, enemies, bullets, and a particle explosion engine. Enemy spawn rate and movement speed escalate dynamically with score, creating natural difficulty curves without scripted levels.
+
+Built to prove a specific point: the skills that make a good Unity or OpenGL project — deterministic game loops, collision detection, state machines, frame-pacing — transfer directly to any runtime environment.
+
+Controls: Arrow keys / WASD to move · Space or Z to shoot · R to restart · Touch drag to move, tap to shoot.`,
+    tags: ['JavaScript', 'Canvas 2D', 'Vanilla JS', 'Browser'],
+    tagColors: ['green', 'cyan', 'orange', 'purple'],
+    tools: [
+      { name: 'Vanilla JavaScript', icon: 'fa-brands fa-js', color: 'green' },
+      { name: 'Canvas 2D API', icon: 'fa-solid fa-display', color: 'cyan' },
+      { name: 'Particle System', icon: 'fa-solid fa-burst', color: 'orange' },
+      { name: 'Touch Controls', icon: 'fa-solid fa-hand-pointer', color: 'purple' },
+    ],
+    icon: 'fa-solid fa-rocket',
+    category: 'webgl',
+    github: null,
+    demo: '__minigame__',
+    featured: true,
+    scoreUnlock: 0,
+    media: [],
+  },
 
   /* ══════════════════════════════════════════════════════
      ↑  ADD YOUR NEW PROJECTS ABOVE THIS LINE  ↑
@@ -235,17 +262,6 @@ function renderCard(proj) {
     return '<span class="tag ' + tagColorClass((proj.tagColors || [])[i] || 'cyan') + '">' + t + '</span>';
   }).join('');
 
-  var lockedAttr = proj.scoreUnlock > 0 ? ' data-score-unlock="' + proj.scoreUnlock + '"' : '';
-  var lockedClass = proj.scoreUnlock > 0 ? ' proj-locked' : '';
-
-  var lockedOverlay = proj.scoreUnlock > 0
-    ? '<div class="card-locked-overlay">'
-    + '<div class="locked-badge"><i class="fa-solid fa-lock"></i> Reach ' + proj.scoreUnlock + ' pts to unlock</div>'
-    + '<button class="btn-play-unlock" onclick="event.stopPropagation();openMiniGameFromCard()" title="Play mini-game to unlock">'
-    + '<i class="fa-solid fa-gamepad"></i> Play to Unlock</button>'
-    + '</div>'
-    : '';
-
   var media = proj.media || [];
   var thumbHtml;
   if (media.length > 0) {
@@ -257,13 +273,18 @@ function renderCard(proj) {
     } else {
       thumbHtml = '<div class="card-thumb"><img src="' + media[0].src + '" alt="" loading="lazy"></div>';
     }
+  } else if (proj.id === 'byte-dodger') {
+    // Special animated placeholder for the playable game card
+    thumbHtml = '<div class="card-thumb card-thumb-placeholder card-thumb-game">'
+      + '<i class="fa-solid fa-rocket"></i>'
+      + '<span class="card-thumb-game-label">PLAYABLE DEMO</span>'
+      + '</div>';
   } else {
     thumbHtml = '<div class="card-thumb card-thumb-placeholder"><i class="' + proj.icon + '"></i></div>';
   }
 
-  return '<article class="proj-card reveal' + lockedClass + '" data-category="' + proj.category
-    + '" data-id="' + proj.id + '"' + lockedAttr + ' role="button" tabindex="0">'
-    + lockedOverlay
+  return '<article class="proj-card reveal" data-category="' + proj.category
+    + '" data-id="' + proj.id + '" role="button" tabindex="0">'
     + thumbHtml
     + '<div class="card-body">'
     + '<div class="card-title">' + proj.title + '</div>'
@@ -334,7 +355,8 @@ function openProjectModal(proj) {
 
   var linksHtml = '';
   if (proj.github) linksHtml += '<a href="' + proj.github + '" target="_blank" rel="noopener" class="btn btn-ghost pm-link-btn"><i class="fa-brands fa-github"></i> GitHub</a>';
-  if (proj.demo) linksHtml += '<a href="' + proj.demo + '" target="_blank" rel="noopener" class="btn btn-primary pm-link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>';
+  if (proj.demo && proj.demo !== '__minigame__') linksHtml += '<a href="' + proj.demo + '" target="_blank" rel="noopener" class="btn btn-primary pm-link-btn"><i class="fa-solid fa-arrow-up-right-from-square"></i> Live Demo</a>';
+  if (proj.demo === '__minigame__') linksHtml += '<button class="btn btn-primary pm-link-btn" onclick="closeProjectModal();openMiniGameFromCard()"><i class="fa-solid fa-gamepad"></i> Play Live Demo</button>';
   document.getElementById('pm-links').innerHTML = linksHtml;
 
   var descText = proj.fullDesc || proj.desc || '';
@@ -443,23 +465,7 @@ window.openLightbox = openLightbox;
 window.closeLightbox = closeLightbox;
 
 /* ─────────────────────────────────────────────────────────────
-   SCORE-BASED UNLOCK
-   ───────────────────────────────────────────────────────────── */
-function unlockProjectsUpTo(score) {
-  document.querySelectorAll('.proj-card.proj-locked').forEach(function (card) {
-    if (score >= parseInt(card.dataset.scoreUnlock, 10)) {
-      card.classList.remove('proj-locked');
-      var overlay = card.querySelector('.card-locked-overlay');
-      if (overlay) overlay.remove();
-      card.classList.add('just-unlocked');
-      setTimeout(function () { card.classList.remove('just-unlocked'); }, 2500);
-    }
-  });
-}
-window.unlockProjectsUpTo = unlockProjectsUpTo;
-
-/* ─────────────────────────────────────────────────────────────
-   OPEN MINI-GAME FROM LOCKED CARD
+   OPEN MINI-GAME (from project card modal or anywhere)
    ───────────────────────────────────────────────────────────── */
 function openMiniGameFromCard() {
   var overlay = document.getElementById('mini-game-overlay');
@@ -474,8 +480,6 @@ window.openMiniGameFromCard = openMiniGameFromCard;
    ───────────────────────────────────────────────────────────── */
 function bindCardEvents(card, proj) {
   function tryOpen(e) {
-    if (e.target.closest('.btn-play-unlock')) return;
-    if (card.classList.contains('proj-locked')) return;
     openProjectModal(proj);
   }
   card.addEventListener('click', tryOpen);

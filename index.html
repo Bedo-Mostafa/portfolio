@@ -43,6 +43,7 @@
         <li><a href="#experience">Experience</a></li>
         <li><a href="#edu-achievements">Education & Awards</a></li>
         <li><a href="#contact">Contact</a></li>
+        <li><a href="#" class="nav-game-link" id="nav-game-link"><i class="fa-solid fa-gamepad"></i> Play</a></li>
       </ul>
 
       <div class="nav-status">
@@ -536,6 +537,43 @@
             </div>
           </div>
         </div>
+
+        <!-- Fun facts — hidden by default, unlocked by mini-game score -->
+        <div id="fun-facts" class="fun-facts-wrap">
+          <div class="fun-facts-locked-hint">
+            <i class="fa-solid fa-lock"></i>
+            <span>// fun_facts.txt — <button class="fun-facts-hint-btn"
+                onclick="document.getElementById('nav-game-link').click()">play the game</button> to read</span>
+          </div>
+          <div class="fun-facts-header">
+            <i class="fa-solid fa-terminal"></i>
+            <span>// fun_facts.txt</span>
+            <span class="fun-facts-badge">UNLOCKED</span>
+          </div>
+          <div class="fun-facts-grid">
+            <div class="fun-fact-item">
+              <span class="fun-fact-key">first_game_ever_played</span>
+              <span class="fun-fact-val">= "Contra — NES emulator, age 7"</span>
+            </div>
+            <div class="fun-fact-item">
+              <span class="fun-fact-key">game_that_made_me_a_dev</span>
+              <span class="fun-fact-val">= "Hollow Knight — realized art + code = magic"</span>
+            </div>
+            <div class="fun-fact-item">
+              <span class="fun-fact-key">proudest_debug_session</span>
+              <span class="fun-fact-val">= "4hrs hunting a Box2D tunnel-through bug at 2AM"</span>
+            </div>
+            <div class="fun-fact-item">
+              <span class="fun-fact-key">unpopular_opinion</span>
+              <span class="fun-fact-val">= "Raw OpenGL is more fun than Unity"</span>
+            </div>
+            <div class="fun-fact-item">
+              <span class="fun-fact-key">current_side_obsession</span>
+              <span class="fun-fact-val">= "Procedural generation & shader art"</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -747,13 +785,8 @@
     <!-- ═══════════════════════════════════════
      MINI GAME (Easter egg)
 ════════════════════════════════════════ -->
-    <button class="game-trigger" title="Play a mini game!">
-      <i class="fa-solid fa-gamepad"></i> PLAY GAME
-    </button>
-
     <div id="mini-game-overlay">
-      <div class="game-ui game-title-ui">BYTE DODGER</div>
-      <div class="game-ui">Arrow / WASD to move &nbsp;·&nbsp; Space / Z to shoot &nbsp;·&nbsp; R to restart</div>
+      <div class="game-ui game-title-ui">BYTE DODGER <span class="game-ui-sub">— Vanilla JS · Canvas 2D</span></div>
       <canvas id="mini-game-canvas"></canvas>
       <button class="game-close"><i class="fa-solid fa-xmark"></i> CLOSE</button>
     </div>

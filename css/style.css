@@ -547,6 +547,34 @@ section {
   padding-left: 1.2rem;
 }
 
+/* open_to_work highlight */
+.t-highlight {
+  color: var(--green);
+  font-weight: 600;
+  background: rgba(110, 232, 74, .1);
+  border: 1px solid rgba(110, 232, 74, .25);
+  border-radius: 3px;
+  padding: 0 6px;
+  box-shadow: 0 0 10px rgba(110, 232, 74, .2);
+  animation: statusPulse 3s ease-in-out infinite;
+}
+
+.t-out-dim {
+  color: var(--text-dim);
+}
+
+@keyframes statusPulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 8px rgba(110, 232, 74, .2);
+  }
+
+  50% {
+    box-shadow: 0 0 18px rgba(110, 232, 74, .45);
+  }
+}
+
 .t-cursor {
   display: inline-block;
   width: 9px;
@@ -900,83 +928,6 @@ section {
 }
 
 /* ── Locked cards ── */
-.proj-card.proj-locked {
-  opacity: .5;
-  filter: grayscale(.65);
-}
-
-.card-locked-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  background: rgba(6, 12, 18, .55);
-  backdrop-filter: blur(3px);
-}
-
-.locked-badge {
-  font-family: var(--font-mono);
-  font-size: .72rem;
-  color: var(--orange);
-  letter-spacing: .07em;
-  padding: 5px 12px;
-  background: rgba(255, 122, 69, .12);
-  border: 1px solid rgba(255, 122, 69, .35);
-  border-radius: var(--r);
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.btn-play-unlock {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  color: var(--green);
-  background: rgba(110, 232, 74, .1);
-  border: 1.5px solid rgba(110, 232, 74, .5);
-  border-radius: var(--r);
-  padding: .45rem 1.1rem;
-  cursor: crosshair;
-  transition: all var(--t);
-}
-
-.btn-play-unlock:hover {
-  background: var(--green);
-  color: var(--bg);
-  box-shadow: var(--glow-green);
-}
-
-@keyframes unlockPulse {
-  0% {
-    box-shadow: 0 0 0 rgba(110, 232, 74, 0);
-    border-color: var(--green);
-  }
-
-  40% {
-    box-shadow: 0 0 40px rgba(110, 232, 74, .55);
-  }
-
-  100% {
-    box-shadow: 0 0 0 rgba(110, 232, 74, 0);
-    border-color: var(--border);
-  }
-}
-
-.proj-card.just-unlocked {
-  opacity: 1;
-  filter: none;
-  animation: unlockPulse 2.2s ease forwards;
-}
-
 /* ============================================================
    PROJECT DETAIL MODAL
    ============================================================ */
@@ -2001,32 +1952,206 @@ footer {
 }
 
 /* ============================================================
-   MINI GAME
+   FUN FACTS (game-unlocked section in About)
    ============================================================ */
-.game-trigger {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 500;
-  background: var(--panel);
-  border: 1.5px solid var(--border);
-  border-radius: var(--r);
-  padding: .5rem 1rem;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--text-mid);
-  cursor: crosshair;
-  transition: all var(--t);
-  letter-spacing: .04em;
-  display: flex;
-  align-items: center;
-  gap: 7px;
+.fun-facts-wrap {
+  margin-top: 2.5rem;
+  border: 1px solid rgba(110, 232, 74, .15);
+  border-radius: var(--r2);
+  overflow: hidden;
+  background: rgba(110, 232, 74, .03);
 }
 
-.game-trigger:hover {
-  border-color: var(--green);
+/* Locked state — shows the hint, hides the content */
+.fun-facts-locked-hint {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .75rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--text-dim);
+}
+
+.fun-facts-hint-btn {
+  background: none;
+  border: none;
+  font-family: var(--font-mono);
+  font-size: .78rem;
   color: var(--green);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0;
+  transition: opacity var(--t);
+}
+
+.fun-facts-hint-btn:hover {
+  opacity: .7;
+}
+
+.fun-facts-header {
+  display: none;
+  /* hidden until unlocked */
+}
+
+.fun-facts-grid {
+  display: none;
+  /* hidden until unlocked */
+}
+
+/* Unlocked state */
+#fun-facts.unlocked .fun-facts-locked-hint {
+  display: none;
+}
+
+#fun-facts.unlocked .fun-facts-header {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .65rem 1.2rem;
+  background: rgba(110, 232, 74, .07);
+  border-bottom: 1px solid rgba(110, 232, 74, .15);
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--green);
+  animation: funFactsReveal .5s ease forwards;
+}
+
+#fun-facts.unlocked .fun-facts-grid {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem 1.2rem;
+  gap: .5rem;
+  animation: funFactsReveal .5s .1s ease both;
+}
+
+.fun-facts-badge {
+  margin-left: auto;
+  font-size: .62rem;
+  letter-spacing: .12em;
+  color: var(--green);
+  background: rgba(110, 232, 74, .12);
+  border: 1px solid rgba(110, 232, 74, .3);
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+
+.fun-fact-item {
+  font-family: var(--font-mono);
+  font-size: .8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem;
+}
+
+.fun-fact-key {
+  color: var(--cyan);
+}
+
+.fun-fact-val {
+  color: var(--text-mid);
+}
+
+@keyframes funFactsReveal {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================================================
+   TOAST NOTIFICATION
+   ============================================================ */
+.game-toast {
+  position: fixed;
+  bottom: 1.8rem;
+  left: 50%;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--panel2);
+  border: 1px solid rgba(110, 232, 74, .4);
+  border-radius: var(--r);
+  padding: .55rem 1.2rem;
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--green);
+  letter-spacing: .06em;
+  z-index: 3000;
+  opacity: 0;
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+  white-space: nowrap;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, .4), 0 0 12px rgba(110, 232, 74, .15);
+}
+
+.game-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ============================================================
+   MINI GAME
+   ============================================================ */
+/* Nav game link — styled distinctly so it reads as interactive */
+.nav-game-link {
+  color: var(--green) !important;
+  border: 1px solid rgba(110, 232, 74, .3);
+  border-radius: var(--r);
+  padding: 3px 10px !important;
+  transition: all var(--t);
+}
+
+.nav-game-link:hover {
+  background: rgba(110, 232, 74, .1);
+  border-color: var(--green);
+  color: var(--green) !important;
+}
+
+/* Byte Dodger card thumbnail */
+.card-thumb-game {
+  background: linear-gradient(135deg, #060c12 0%, #0a1a14 60%, #061209 100%);
+  border-bottom: 1px solid rgba(110, 232, 74, .2);
+  position: relative;
+  overflow: hidden;
+}
+
+.card-thumb-game::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 30% 60%, rgba(110, 232, 74, .07) 0%, transparent 60%),
+    radial-gradient(ellipse at 70% 30%, rgba(41, 217, 245, .06) 0%, transparent 55%);
+}
+
+.card-thumb-game i {
+  color: var(--green);
+  filter: drop-shadow(0 0 10px rgba(110, 232, 74, .5));
+}
+
+.card-thumb-game-label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: .62rem;
+  letter-spacing: .14em;
+  color: var(--green);
+  opacity: .8;
+  margin-top: .5rem;
+}
+
+/* Overlay subtitle text */
+.game-ui-sub {
+  font-family: var(--font-mono);
+  font-size: .65rem;
+  color: var(--text-dim);
+  letter-spacing: .1em;
+  vertical-align: middle;
+  margin-left: .5rem;
 }
 
 #mini-game-overlay {
