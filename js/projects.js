@@ -434,7 +434,12 @@ function openProjectModal(proj) {
 
 function closeProjectModal() {
   var modal = document.getElementById('proj-modal');
-  if (modal) { modal.classList.remove('active'); document.body.style.overflow = ''; }
+  if (modal) {
+    /* Stop any playing YouTube iframes by blanking their src */
+    modal.querySelectorAll('iframe').forEach(function (f) { f.src = ''; });
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 }
 window.closeProjectModal = closeProjectModal;
 
