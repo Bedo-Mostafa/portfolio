@@ -1,0 +1,349 @@
+{
+  "site": {
+    "name": "BEDO.DEV",
+    "fullName": "Abdelrhman Mostafa Hamed",
+    "title": "Game Developer",
+    "location": "Maadi, Cairo, Egypt",
+    "email": "bedomostafa37@gmail.com",
+    "phone": "+201554357046",
+    "github": "https://github.com/Bedo-Mostafa",
+    "linkedin": "https://linkedin.com/in/abdelrahman-moostafa",
+    "itchio": "https://abdelrhman-mostafa.itch.io",
+    "githubUser": "Bedo-Mostafa",
+    "status": "Available for hire",
+    "engine": "Unity",
+    "languages": "C# / C++",
+    "jamPlacements": "2 Placements",
+    "heroTag": "// game developer · cairo, egypt",
+    "heroTitle": "Unity · C++ · OpenGL · WebGL",
+    "heroBio": "I build worlds from code — not engines that do the heavy lifting, but low-level systems where every triangle earns its place. Junior game developer with a passion for real-time graphics, physics simulation, and immersive interactive experiences.",
+    "contactBlurb": "Open to junior game developer roles, freelance projects, and creative collaborations. Whether it's real-time graphics, gameplay systems, or educational game design — let's build something worth playing."
+  },
+
+  "terminal": [
+    { "type": "cmd",       "text": "whoami" },
+    { "type": "out",       "text": "abdelrhman_mostafa — game developer" },
+    { "type": "cmd",       "text": "cat skills.txt | grep primary" },
+    { "type": "out",       "text": "C# · Unity · C++ · OpenGL · Box2D" },
+    { "type": "cmd",       "text": "ls ./awards/" },
+    { "type": "out",       "text": "2nd_EgyptGameJam.exe  3rd_MiniJam.exe" },
+    { "type": "cmd",       "text": "echo $STATUS" },
+    { "type": "highlight", "text": "open_to_work=true", "note": "  location=Cairo,Egypt" }
+  ],
+
+  "funFacts": [
+    { "key": "first_game_ever_played",   "val": "\"Contra — NES emulator, age 7\"" },
+    { "key": "game_that_made_me_a_dev",  "val": "\"Hollow Knight — realized art + code = magic\"" },
+    { "key": "proudest_debug_session",   "val": "\"4hrs hunting a Box2D tunnel-through bug at 2AM\"" },
+    { "key": "unpopular_opinion",        "val": "\"Raw OpenGL is more fun than Unity\"" },
+    { "key": "current_side_obsession",   "val": "\"Procedural generation & shader art\"" }
+  ],
+
+  "about": {
+    "paragraphs": [
+      "I'm Abdelrhman Mostafa Hamed — a junior game developer from Cairo, Egypt, currently enrolled in the 9-Month Interactive Media & Game Development Diploma at ITI Smart Village.",
+      "My interest is in the low-level side of game development: writing rendering pipelines from scratch, working directly with physics libraries, and understanding exactly what the engine is hiding from you. That curiosity led me to build a full 3D maze from raw OpenGL and a 2D physics prototype on bare Box2D — before touching Unity at all.",
+      "Outside of game dev, I've taught programming to kids, shipped educational WebGL games for kindergarteners, and placed in two ITI game jams. I work well under constraints and enjoy the puzzle of making something feel smooth and responsive with minimal resources.",
+      "I'm open to junior game developer roles, freelance projects, and collaborations involving real-time graphics or interactive systems."
+    ],
+    "stats": [
+      { "num": "2",    "label": "Game Jam Placements" },
+      { "num": "2+",   "label": "Shipped Games" },
+      { "num": "4",    "label": "Programming Languages" },
+      { "num": "3.23", "label": "GPA — Very Good" }
+    ],
+    "personal": [
+      { "icon": "fa-solid fa-location-dot", "label": "Location",       "val": "Maadi, Cairo, Egypt" },
+      { "icon": "fa-solid fa-flag",          "label": "Nationality",    "val": "Egyptian" },
+      { "icon": "fa-solid fa-gamepad",       "label": "Primary Engine", "val": "Unity" },
+      { "icon": "fa-solid fa-circle-check",  "label": "Status",         "val": "Available for hire", "class": "status-green" }
+    ]
+  },
+
+  "skills": [
+    {
+      "group": "Game Dev",
+      "icon": "fa-solid fa-dice-d20",
+      "items": [
+        { "name": "Unity Engine",      "pct": 90 },
+        { "name": "OpenGL (Modern)",   "pct": 75 },
+        { "name": "Box2D Physics",     "pct": 70, "color": "orange" },
+        { "name": "NPC AI & Behaviour","pct": 65, "color": "green" },
+        { "name": "Gameplay Systems",  "pct": 85 },
+        { "name": "Level Design",      "pct": 72, "color": "green" }
+      ]
+    },
+    {
+      "group": "Programming",
+      "icon": "fa-solid fa-code",
+      "items": [
+        { "name": "C# (primary)",       "pct": 92 },
+        { "name": "C / C++",            "pct": 78, "color": "orange" },
+        { "name": "Java",               "pct": 60, "color": "green" },
+        { "name": "Python (basics)",    "pct": 50, "color": "green" },
+        { "name": "F# / Oz (functional)","pct": 45 },
+        { "name": "GLSL Shaders",       "pct": 68, "color": "orange" }
+      ]
+    },
+    {
+      "group": "Backend / Data",
+      "icon": "fa-solid fa-database",
+      "items": [
+        { "name": "ASP.NET / .NET Core",           "pct": 80 },
+        { "name": "Entity Framework Core",         "pct": 75, "color": "orange" },
+        { "name": "LINQ",                          "pct": 85, "color": "green" },
+        { "name": "MS SQL Server",                 "pct": 70, "color": "orange" },
+        { "name": "PL/SQL / MySQL",                "pct": 65 },
+        { "name": "Data Structures & Algorithms",  "pct": 85 }
+      ]
+    },
+    {
+      "group": "Tools & Workflow",
+      "icon": "fa-brands fa-git-alt",
+      "items": [
+        { "name": "Git / GitHub",              "pct": 88 },
+        { "name": "Agile / Scrum",             "pct": 75, "color": "orange" },
+        { "name": "Performance Optimisation",  "pct": 70, "color": "green" },
+        { "name": "Asset Integration",         "pct": 80 }
+      ]
+    },
+    {
+      "group": "Languages & Soft Skills",
+      "icon": "fa-solid fa-users",
+      "items": [
+        { "name": "Arabic — Native",    "pct": 100 },
+        { "name": "English — Professional", "pct": 85, "color": "orange" },
+        { "name": "Communication",      "pct": 90, "color": "orange" },
+        { "name": "Teamwork",           "pct": 95, "color": "green" },
+        { "name": "Problem-Solving",    "pct": 90 },
+        { "name": "Time Management",    "pct": 80, "color": "orange" }
+      ]
+    }
+  ],
+
+  "experience": [
+    {
+      "role": "Game Developer Instructor",
+      "date": "Jul 2025 – Oct 2025",
+      "company": "3C Online Coding School",
+      "location": "Remote",
+      "icon": "fa-solid fa-wifi",
+      "desc": "Translated the dense language of game development into something a ten-year-old could build with. Designed structured lesson progressions in Unity and C# that met students where they were — and pushed them further than they expected."
+    },
+    {
+      "role": "Game Developer",
+      "date": "Sep 2024 – Feb 2025",
+      "company": "Whitton Publishing",
+      "location": "Remote · Project-Based",
+      "icon": "fa-solid fa-globe",
+      "desc": "Shipped two browser-native educational games for kindergarten-age learners. The challenge wasn't just technical — it was designing play that felt effortless to a five-year-old while quietly building cognitive foundations underneath. Delivered via Unity's WebGL pipeline with cross-browser compatibility."
+    }
+  ],
+
+  "education": [
+    {
+      "degree": "9-Month Diploma",
+      "school": "Information Technology Institute (ITI)",
+      "date": "Oct 2025 – Present",
+      "location": "Smart Village, Egypt",
+      "detail": "Interactive Media & Game Development Academy"
+    },
+    {
+      "degree": "BSc Computer Science",
+      "school": "Helwan University",
+      "date": "2021 – 2025",
+      "location": "Cairo, Egypt",
+      "detail": "GPA 3.23 — Grade: Very Good"
+    }
+  ],
+
+  "awards": [
+    {
+      "place": "2nd",
+      "title": "Egypt Game Jam",
+      "org": "Information Technology Institute (ITI)",
+      "icon": "fa-solid fa-trophy",
+      "date": "February 2026",
+      "desc": "Shipped a fully playable domino game under jam pressure — rule enforcement, placement logic, turn sequencing, and stable scene transitions. The kind of game jam where nothing breaks in the demo. Ours didn't."
+    },
+    {
+      "place": "3rd",
+      "title": "Mini Game Jam",
+      "org": "Information Technology Institute (ITI)",
+      "icon": "fa-solid fa-stopwatch",
+      "date": "November 2025",
+      "desc": "Designed for speed: a core gameplay loop assembled from scratch under the clock. Modular architecture meant rapid iteration and a clean, playable prototype delivered inside the event window — not after it."
+    }
+  ],
+
+  "projects": [
+    {
+      "id": "opengl-maze",
+      "title": "3D OpenGL Maze Explorer",
+      "shortDesc": "First-person 3D maze built vertex-by-vertex on raw OpenGL with custom GLSL shaders.",
+      "fullDesc": "A hand-crafted 3D maze assembled vertex-by-vertex on raw OpenGL — no engine scaffolding, no shortcuts.\n\nEvery piece of geometry is defined manually using VAOs, VBOs, and EBOs. Custom GLSL shaders handle every lighting calculation, and Phong illumination reacts in real-time as you navigate the first-person camera through designed corridors.\n\nThe goal was to understand what engines hide from you: MVP matrix transformations, the depth buffer, texture mapping coordinates, and how a real-time render loop actually works at the metal.",
+      "tags": ["C++", "OpenGL", "GLSL", "Graphics"],
+      "tagColors": ["cyan", "orange", "purple", "green"],
+      "tools": [
+        { "name": "C++",              "icon": "fa-solid fa-code",                   "color": "orange" },
+        { "name": "OpenGL 3.3",       "icon": "fa-solid fa-cube",                   "color": "cyan" },
+        { "name": "GLSL Shaders",     "icon": "fa-solid fa-wand-magic-sparkles",    "color": "purple" },
+        { "name": "GLM Math Library", "icon": "fa-solid fa-square-root-variable",   "color": "green" },
+        { "name": "GLFW",             "icon": "fa-solid fa-window-maximize",        "color": "cyan" }
+      ],
+      "icon": "fa-solid fa-cube",
+      "category": "graphics",
+      "github": "https://github.com/Bedo-Mostafa/3D-Maze-OpenGL",
+      "demo": "https://abdelrhman-mostafa.itch.io/3d-maze-explorer",
+      "featured": true,
+      "media": [
+        { "type": "youtube", "id": "z4MjLof0k9c", "caption": "Gameplay walkthrough" }
+      ]
+    },
+    {
+      "id": "physics-prototype",
+      "title": "Low-Level 2D Physics Prototype",
+      "shortDesc": "Box2D called directly, game-loop hand-rolled — physics without an engine safety net.",
+      "fullDesc": "Physics without a safety net — Box2D called directly, game-loop hand-rolled.\n\nEvery collision manifold, every impulse response, every frame paced by code rather than an editor. The prototype demonstrates rigid body dynamics, joint constraints, and custom collision filtering — all wired up by hand with no game engine in between.\n\nBuilt to feel what engines hide from you: how a fixed timestep accumulator prevents spiral-of-death frame drops, and how collision callbacks map to actual gameplay events.",
+      "tags": ["C++", "Box2D", "Physics", "2D"],
+      "tagColors": ["orange", "cyan", "green", "cyan"],
+      "tools": [
+        { "name": "C++",   "icon": "fa-solid fa-code",    "color": "orange" },
+        { "name": "Box2D", "icon": "fa-solid fa-atom",    "color": "cyan" },
+        { "name": "SDL2",  "icon": "fa-solid fa-display", "color": "green" }
+      ],
+      "icon": "fa-solid fa-atom",
+      "category": "systems",
+      "github": null,
+      "demo": null,
+      "featured": true,
+      "media": [
+        { "type": "youtube", "id": "L-FQmg9gyos", "caption": "Gameplay walkthrough" }
+      ]
+    },
+    {
+      "id": "tick-tock",
+      "title": "Tick Tock Treasure",
+      "shortDesc": "3D treasure hunt designed around countdown anxiety — urgency that grows every run.",
+      "fullDesc": "Seconds vanish, stakes rise — a 3D treasure hunt designed around the anxiety of a countdown.\n\nPlayer movement, environment interaction, and collectible logic wire together to create something that feels urgent even on your third run. The level geometry was designed to give the player just enough navigational clarity that the timer, not confusion, creates the pressure.\n\nKey systems: Unity's character controller extended with custom physics responses, a dynamic UI that reacts to time remaining, and an item spawning system that randomises treasure positions each session.",
+      "tags": ["Unity", "C#", "3D", "Adventure"],
+      "tagColors": ["cyan", "green", "orange", "purple"],
+      "tools": [
+        { "name": "Unity",         "icon": "fa-solid fa-gamepad", "color": "cyan" },
+        { "name": "C#",            "icon": "fa-solid fa-hashtag", "color": "green" },
+        { "name": "Unity Physics", "icon": "fa-solid fa-atom",    "color": "orange" },
+        { "name": "Cinemachine",   "icon": "fa-solid fa-video",   "color": "purple" }
+      ],
+      "icon": "fa-solid fa-gem",
+      "category": "unity",
+      "github": "https://github.com/Hazem-Ahmed1/3D-Game-Grahpics",
+      "demo": "https://hazem-ahmed-a.itch.io/tick-tock-treasure",
+      "featured": true,
+      "media": [
+        { "type": "youtube", "id": "QsxG-32OnnU", "caption": "Gameplay walkthrough" }
+      ]
+    },
+    {
+      "id": "yallahwy",
+      "title": "Yallahwy — ITI Game Jam",
+      "shortDesc": "Arcade chaos built in 3 days — C++ with SFML and Box2D under jam constraints.",
+      "fullDesc": "Built in 72 hours for an ITI game jam — speed over comfort, correctness under pressure.\n\nCore loop is immediate: responsive controls, tight collision handling, and fast restart cycles. SFML handles rendering and input while Box2D drives rigid body interactions and collision resolution.\n\nThe constraint shaped the architecture: minimal abstractions, direct system wiring, and a focus on stability over feature breadth. The result is a compact, deterministic gameplay loop that holds under rapid iteration and demo conditions.",
+      "tags": ["C++", "SFML", "Box2D", "Game Jam"],
+      "tagColors": ["orange", "cyan", "cyan", "purple"],
+      "tools": [
+        { "name": "C++",   "icon": "fa-solid fa-code",    "color": "orange" },
+        { "name": "SFML",  "icon": "fa-solid fa-display", "color": "cyan" },
+        { "name": "Box2D", "icon": "fa-solid fa-atom",    "color": "green" }
+      ],
+      "icon": "fa-solid fa-fire",
+      "category": "systems",
+      "github": null,
+      "demo": "https://abdelrhman-mostafa.itch.io/yallahwy",
+      "featured": true,
+      "media": [
+        { "type": "image", "src": "assets/yallahwy/1.png", "caption": "Core gameplay – fast loop and immediate restart" },
+        { "type": "image", "src": "assets/yallahwy/2.png", "caption": "Physics interaction – Box2D collision handling" },
+        { "type": "image", "src": "assets/yallahwy/3.png", "caption": "Arcade chaos – dense objects and reactions" },
+        { "type": "image", "src": "assets/yallahwy/4.png", "caption": "Arcade chaos – dense objects and reactions" }
+      ]
+    },
+    {
+      "id": "domino-jam",
+      "title": "Domino — Egypt Game Jam 2nd Place",
+      "shortDesc": "Fully rule-enforced domino game shipped under jam pressure. Didn't crash at the demo table.",
+      "fullDesc": "Shipped under jam pressure with full rule enforcement: placement validity, turn sequencing, score tracking, and stable scene transitions.\n\nBuilt in 6 days for the Egypt Game Jam hosted by ITI. The challenge wasn't just making a playable game — it was making a correct domino game. Every placement is validated against adjacency and pip-matching rules. The AI opponent uses a weighted decision tree to pick the best valid tile.\n\nThe kind of submission that doesn't crash on the demo table. This one didn't. Won 2nd place out of all competing teams.",
+      "tags": ["Unity", "C#", "Game Jam", "Board Game"],
+      "tagColors": ["cyan", "green", "orange", "purple"],
+      "tools": [
+        { "name": "Unity",              "icon": "fa-solid fa-gamepad",     "color": "cyan" },
+        { "name": "C#",                 "icon": "fa-solid fa-hashtag",     "color": "green" },
+        { "name": "AI / Decision Tree", "icon": "fa-solid fa-brain",       "color": "orange" },
+        { "name": "UI Toolkit",         "icon": "fa-solid fa-layer-group", "color": "purple" }
+      ],
+      "icon": "fa-solid fa-trophy",
+      "category": "unity",
+      "github": "https://github.com/Bedo-Mostafa/EGJ",
+      "demo": "https://abdelrhman-mostafa.itch.io/a3dt-domino",
+      "featured": true,
+      "media": [
+        { "type": "youtube", "id": "nK0kg0FuQmE", "caption": "Gameplay walkthrough" }
+      ]
+    },
+    {
+      "id": "kg-webgl",
+      "title": "Educational WebGL Games (KG1 & KG2)",
+      "shortDesc": "Browser-native games for kindergarteners — cognitive exercises disguised as play.",
+      "fullDesc": "Two browser-native games built for kindergarteners — zero friction, pure interaction.\n\nEach mechanic is a cognitive exercise in disguise: shape recognition, sequencing, spatial awareness. The games were designed with a UX-first approach — a five-year-old should never need to read a tutorial. Every interaction is discoverable through play.\n\nCommissioned by Whitton Publishing. Ships in a browser tab with no install, no loading screen that loses young attention spans. Built with Unity's WebGL pipeline and optimised for low-end school hardware.",
+      "tags": ["Unity", "WebGL", "Educational", "C#"],
+      "tagColors": ["cyan", "orange", "green", "green"],
+      "tools": [
+        { "name": "Unity",                  "icon": "fa-solid fa-gamepad",  "color": "cyan" },
+        { "name": "C#",                     "icon": "fa-solid fa-hashtag",  "color": "green" },
+        { "name": "WebGL Export",           "icon": "fa-brands fa-chrome",  "color": "orange" },
+        { "name": "Educational UX Design",  "icon": "fa-solid fa-child",    "color": "purple" }
+      ],
+      "icon": "fa-solid fa-children",
+      "category": "webgl",
+      "github": null,
+      "demo": null,
+      "featured": false,
+      "media": [
+        { "type": "image", "src": "assets/KG1&2/1.png",  "caption": "Main menu – phonics learning entry screen" },
+        { "type": "image", "src": "assets/KG1&2/2.png",  "caption": "Interactive stage – character responding to player input" },
+        { "type": "image", "src": "assets/KG1&2/3.png",  "caption": "UI feedback – animated curtain transition" },
+        { "type": "image", "src": "assets/KG1&2/4.png",  "caption": "Game scene – learning environment setup" },
+        { "type": "image", "src": "assets/KG1&2/5.png",  "caption": "Object interaction – selecting and matching elements" },
+        { "type": "image", "src": "assets/KG1&2/6.png",  "caption": "Phonics exercise – letter recognition activity" },
+        { "type": "image", "src": "assets/KG1&2/7.png",  "caption": "Progression system – advancing through levels" },
+        { "type": "image", "src": "assets/KG1&2/8.png",  "caption": "Visual feedback – correct/incorrect response cues" },
+        { "type": "image", "src": "assets/KG1&2/9.png",  "caption": "World map – selecting different learning modules" },
+        { "type": "image", "src": "assets/KG1&2/10.png", "caption": "Choice interaction – selecting correct answer paths" },
+        { "type": "image", "src": "assets/KG1&2/11.png", "caption": "Writing practice – tracing letters activity" },
+        { "type": "image", "src": "assets/KG1&2/12.png", "caption": "Assessment screen – evaluating player input" },
+        { "type": "image", "src": "assets/KG1&2/13.png", "caption": "Main menu – themed environment variation" },
+        { "type": "image", "src": "assets/KG1&2/14.png", "caption": "Mini-game – movement and interaction sequence" },
+        { "type": "image", "src": "assets/KG1&2/15.png", "caption": "Final gameplay – question and answer challenge" }
+      ]
+    },
+    {
+      "id": "byte-dodger",
+      "title": "Byte Dodger — Browser Game",
+      "shortDesc": "Vanilla JS space shooter built from scratch: Canvas 2D, particle system, enemy AI, touch controls. Zero libraries.",
+      "fullDesc": "A fully self-contained browser game written in vanilla JavaScript — no frameworks, no game libraries, no shortcuts.\n\nThe canvas render loop runs at 60fps with a custom entity system managing the player, enemies, bullets, and a particle explosion engine. Enemy spawn rate and movement speed escalate dynamically with score, creating natural difficulty curves without scripted levels.\n\nBuilt to prove a specific point: the skills that make a good Unity or OpenGL project — deterministic game loops, collision detection, state machines, frame-pacing — transfer directly to any runtime environment.\n\nControls: Arrow keys / WASD to move · Space or Z to shoot · R to restart · Touch drag to move, tap to shoot.",
+      "tags": ["JavaScript", "Canvas 2D", "Vanilla JS", "Browser"],
+      "tagColors": ["green", "cyan", "orange", "purple"],
+      "tools": [
+        { "name": "Vanilla JavaScript", "icon": "fa-brands fa-js",           "color": "green" },
+        { "name": "Canvas 2D API",      "icon": "fa-solid fa-display",       "color": "cyan" },
+        { "name": "Particle System",    "icon": "fa-solid fa-burst",         "color": "orange" },
+        { "name": "Touch Controls",     "icon": "fa-solid fa-hand-pointer",  "color": "purple" }
+      ],
+      "icon": "fa-solid fa-rocket",
+      "category": "webgl",
+      "github": null,
+      "demo": "__minigame__",
+      "featured": true,
+      "media": []
+    }
+  ]
+}

@@ -538,39 +538,19 @@
           </div>
         </div>
 
-        <!-- Fun facts — hidden by default, unlocked by mini-game score -->
+        <!-- Fun facts — hidden by default, unlocked mid-game. Grid populated from data.json -->
         <div id="fun-facts" class="fun-facts-wrap">
           <div class="fun-facts-locked-hint">
             <i class="fa-solid fa-lock"></i>
-            <span>// fun_facts.txt — <button class="fun-facts-hint-btn"
-                onclick="document.getElementById('nav-game-link').click()">play the game</button> to read</span>
+            <span>// fun_facts.txt — <button class="fun-facts-hint-btn" onclick="document.getElementById('nav-game-link').click()">play the game</button> to read</span>
           </div>
           <div class="fun-facts-header">
             <i class="fa-solid fa-terminal"></i>
             <span>// fun_facts.txt</span>
             <span class="fun-facts-badge">UNLOCKED</span>
           </div>
-          <div class="fun-facts-grid">
-            <div class="fun-fact-item">
-              <span class="fun-fact-key">first_game_ever_played</span>
-              <span class="fun-fact-val">= "Contra — NES emulator, age 7"</span>
-            </div>
-            <div class="fun-fact-item">
-              <span class="fun-fact-key">game_that_made_me_a_dev</span>
-              <span class="fun-fact-val">= "Hollow Knight — realized art + code = magic"</span>
-            </div>
-            <div class="fun-fact-item">
-              <span class="fun-fact-key">proudest_debug_session</span>
-              <span class="fun-fact-val">= "4hrs hunting a Box2D tunnel-through bug at 2AM"</span>
-            </div>
-            <div class="fun-fact-item">
-              <span class="fun-fact-key">unpopular_opinion</span>
-              <span class="fun-fact-val">= "Raw OpenGL is more fun than Unity"</span>
-            </div>
-            <div class="fun-fact-item">
-              <span class="fun-fact-key">current_side_obsession</span>
-              <span class="fun-fact-val">= "Procedural generation & shader art"</span>
-            </div>
+          <div class="fun-facts-grid" id="fun-facts-grid">
+            <!-- populated by main.js from data.json -->
           </div>
         </div>
 
