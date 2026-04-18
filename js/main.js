@@ -6,8 +6,11 @@
 document.addEventListener('DOMContentLoaded', () => {
 
   /* ── Load data.json first, then boot everything ── */
-  fetch('data.json')
-    .then(r => r.json())
+  fetch('./data.json')
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
+      return r.json();
+    })
     .then(data => {
       window._siteData = data;
       /* populate STATIC_PROJECTS for projects.js */
@@ -19,7 +22,10 @@ document.addEventListener('DOMContentLoaded', () => {
       if (data.site && data.site.githubUser) window.GITHUB_USER = data.site.githubUser;
       boot(data);
     })
-    .catch(() => boot(null)); /* graceful fallback if fetch fails */
+    .catch(err => {
+      console.error("Failed to load data.json:", err); // Now you can see the error in DevTools
+      boot(null);
+    });
 
   function boot(data) {
 
